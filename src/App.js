@@ -3,16 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 import AppBarDrawer from './components/AppBarDrawer';
 import HomePage from './views/HomePage';
+import SearchPage from './views/SearchPage';
 
 class App extends Component {
   render() {
-    // return <HomePage />;
     return (
-      <React.Fragment>
-        <AppBarDrawer appName="MyApp">
-          <HomePage />
-        </AppBarDrawer>
-      </React.Fragment>
+      <AppBarDrawer appName="MyApp">
+        <HomePage />
+        {/* <SearchPage /> */}
+      </AppBarDrawer>
     );
   }
 }
