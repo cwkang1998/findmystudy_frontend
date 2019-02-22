@@ -9,7 +9,7 @@ class App extends Component {
     // return <HomePage />;
     return (
       <React.Fragment>
-        <AppBarDrawer appName="MyApp">
+        <AppBarDrawer appName="FindMyStudy">
           <HomePage />
         </AppBarDrawer>
       </React.Fragment>
