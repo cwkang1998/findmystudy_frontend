@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
 import AppBarDrawer from './components/AppBarDrawer';
 import Facebook from './icons/facebook.png';
 import Email from './icons/email.png';
@@ -29,23 +28,29 @@ class App extends Component {
               CK CHIAU ADVISORY
       
           {/* Email icon */}
-          <p>
+         
+            <a href = "mailto:ck@mystudy.my?subject=Booking an appointment">
+            <p>
             <img src={Email} alt = "email icon" /> 
               </p>
-              ck@mystudy.my
+             ck@mystudy.my
+            </a>
 
           {/* Whatsapp icon */}
+          
+          <a href ="whatsapp://send?phone=+60178897743">
           <p>
             <img src={WhatsApp} alt = "whatsapp icon" />
               </p>
               +6017-8897743
-
+</a>
           {/* Phone icon */}
+          <a href = "tel:+60134751197">
           <p>
             <img src={Phone} alt = "phone icon" /> 
               </p>
               +603-6259 0021
-
+</a>
           {/* Address icon */}
           <p>
           <div>
@@ -60,11 +65,12 @@ class App extends Component {
               </p>
 
           {/* Skype icon */}
+          <a href = "skype:ckchiau">
           <div>    
             <img src={Skype} alt = "skype icon"  />
               </div>
               ckchiau
-            
+              </a>
               <span>&nbsp;&nbsp;</span>
 
         </header>
