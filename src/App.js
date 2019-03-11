@@ -5,13 +5,11 @@ import './App.css';
 import AppBarDrawer from './components/AppBarDrawer';
 import HomePage from './views/HomePage';
 import SearchPage from './views/SearchPage';
-import test2 from './views/test2';
-
 class App extends Component {
   render() {
     return (
       <Router>
-        <AppBarDrawer appName="MyApp">
+        <AppBarDrawer appName="FindMyStudy">
           <Route exact path="/" component={HomePage} />
           <Route path="/search" component={SearchPage} />
         </AppBarDrawer>
