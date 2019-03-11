@@ -117,6 +117,15 @@ class AppBarDrawer extends React.Component {
                 <ListItemText primary={'Home'} />
               </ListItem>
             </Link>
+            {/* Survey */}
+            <Link style={{ textDecoration: 'none' }} to="/survey">
+              <ListItem button key={'Survey'} onClick={this.handleDrawerClose}>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Survey'} />
+              </ListItem>
+            </Link>
             {/* Search */}
             <Link style={{ textDecoration: 'none' }} to="/search">
               <ListItem button key={'Search'} onClick={this.handleDrawerClose}>

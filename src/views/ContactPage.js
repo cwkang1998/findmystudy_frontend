@@ -16,7 +16,6 @@ const styles = {
   },
   container: {
     textAlign: 'center',
-    // backgroundColor: '#fafafa',
     minHeight: '100vh',
     display: 'flex',
     flexDirection:'column',

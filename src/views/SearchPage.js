@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
 import FilterSearchBar from '../components/FilterSearchBar';
 import UniList from '../components/UniList';
 import CourseList from '../components/CourseList';
