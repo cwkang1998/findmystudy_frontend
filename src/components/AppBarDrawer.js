@@ -66,7 +66,7 @@ class AppBarDrawer extends React.Component {
   };
 
   render() {
-    const { classes, theme, appName, children, styles } = this.props;
+    const { classes, theme, appName, children } = this.props;
     const { open } = this.state;
 
     return (
