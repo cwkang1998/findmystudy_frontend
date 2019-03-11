@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
 
 const styles = {
@@ -13,8 +12,8 @@ const styles = {
     marginTop: 16
   },
   media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
+    height: 150,
+    // paddingTop: 56.25%
   }
 };
 
@@ -30,6 +29,7 @@ class UniList extends React.Component {
                 <Card>
                   <CardHeader title={data.title} />
                   <CardMedia
+                    component="img"
                     style={styles.media}
                     image={data.img}
                     title={data.title}

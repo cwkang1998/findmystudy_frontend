@@ -26,31 +26,31 @@ export default class SearchPage extends Component {
         title: 'Featured post',
         uni: 'UniName',
         img:
-          'https://dof4zo1o53v4w.cloudfront.net/s3fs-public/styles/logo/public/logos/UoN_Primary_Logo_RGB.png?itok=DrEaz-QZ'
+          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
       },
       {
         title: 'Post title',
         uni: 'UniName2',
         img:
-          'https://dof4zo1o53v4w.cloudfront.net/s3fs-public/styles/logo/public/logos/UoN_Primary_Logo_RGB.png?itok=DrEaz-QZ'
+          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
       },
       {
         title: 'Post title3',
         uni: 'UniName2',
         img:
-          'https://dof4zo1o53v4w.cloudfront.net/s3fs-public/styles/logo/public/logos/UoN_Primary_Logo_RGB.png?itok=DrEaz-QZ'
+          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
       },
       {
         title: 'Post title2',
         uni: 'UniName2',
         img:
-          'https://dof4zo1o53v4w.cloudfront.net/s3fs-public/styles/logo/public/logos/UoN_Primary_Logo_RGB.png?itok=DrEaz-QZ'
+          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
       },
       {
         title: 'Post title4',
         uni: 'UniName2',
         img:
-          'https://dof4zo1o53v4w.cloudfront.net/s3fs-public/styles/logo/public/logos/UoN_Primary_Logo_RGB.png?itok=DrEaz-QZ'
+          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
       }
     ],
     topic: 'uni'
