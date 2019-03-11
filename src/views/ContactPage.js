@@ -6,31 +6,59 @@ import Phone from '../resources/icons/phone.png';
 import Address from '../resources/icons/address.png';
 import Skype from '../resources/icons/skype.png';
 
+const styles = {
+  titleText: {
+    fontSize: 75,
+    color: 'darkblue'
+  },
+  contentText: {
+    color: 'black'
+  },
+  container: {
+    textAlign: 'center',
+    // backgroundColor: '#fafafa',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection:'column',
+    alignItems: 'center',
+    fontSize: 'calc(10px + 2vmin)',
+    color: 'white'
+  }
+};
 class ContactPage extends Component {
   render() {
     return (
-      <div>
-        <h1 style={divStyle}>CONTACT US</h1>
+      <div style={styles.container}>
+        <h1 style={styles.titleText}>CONTACT US</h1>
         {/* Facebook icon */}
         <a href="https://www.facebook.com/ckchiau">
           <img src={Facebook} alt="fb icon" />
         </a>
-        CK CHIAU ADVISORY
+        <div style={styles.contentText}>CK CHIAU ADVISORY</div>
         {/* Email icon */}
-        <p>
-          <img src={Email} alt="email icon" />
-        </p>
-        ck@mystudy.my
+
+        <a href="mailto:ck@mystudy.my?subject=Booking an appointment">
+          <p>
+            <img src={Email} alt="email icon" />
+          </p>
+          ck@mystudy.my
+        </a>
+
         {/* Whatsapp icon */}
-        <p>
-          <img src={WhatsApp} alt="whatsapp icon" />
-        </p>
-        +6017-8897743
+
+        <a href="whatsapp://send?phone=+60178897743">
+          <p>
+            <img src={WhatsApp} alt="whatsapp icon" />
+          </p>
+          +6017-8897743
+        </a>
         {/* Phone icon */}
-        <p>
-          <img src={Phone} alt="phone icon" />
-        </p>
-        +603-6259 0021
+        <a href="tel:+60134751197">
+          <p>
+            <img src={Phone} alt="phone icon" />
+          </p>
+          +603-6259 0021
+        </a>
         {/* Address icon */}
         <p>
           <div>
@@ -38,23 +66,23 @@ class ContactPage extends Component {
               <img src={Address} alt="address icon" />
             </a>
           </div>
-          CK CHIAU ADVISORY 3-1-3, Cantonment Exchange, 698, Jalan Sultan Azlan
-          Shah (Jalan Ipoh), 51200 Kuala Lumpur.
+          <div style={styles.contentText}>
+            CK CHIAU ADVISORY 3-1-3, Cantonment Exchange, 698, Jalan Sultan
+            Azlan Shah (Jalan Ipoh), 51200 Kuala Lumpur.
+          </div>
         </p>
+
         {/* Skype icon */}
-        <div>
-          <img src={Skype} alt="skype icon" />
-        </div>
-        ckchiau
+        <a href="skype:ckchiau">
+          <div>
+            <img src={Skype} alt="skype icon" />
+          </div>
+          ckchiau
+        </a>
         <span>&nbsp;&nbsp;</span>
       </div>
     );
   }
 }
-
-const divStyle = {
-  fontSize: 75,
-  color: 'darkblue'
-};
 
 export default ContactPage;

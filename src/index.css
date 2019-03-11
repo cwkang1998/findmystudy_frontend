@@ -8,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #ebebeb;
 }
 
 code {
@@ -15,6 +16,6 @@ code {
     monospace;
 }
 
-#root{
+#root {
   flex-grow: 1;
 }
