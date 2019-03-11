@@ -54,8 +54,7 @@ const styles = theme => ({
 
 class AppBarDrawer extends React.Component {
   state = {
-    open: false,
-    redirect: false
+    open: false
   };
 
   handleDrawerOpen = () => {
@@ -94,40 +93,44 @@ class AppBarDrawer extends React.Component {
           </Toolbar>
         </AppBar>
         <Drawer
-          variant="persistent"
-          anchor="left"
           open={open}
+          onClose={this.handleDrawerClose}
           classes={{
             paper: classes.drawerPaper
           }}
         >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <Link style={{textDecoration: 'none'}} to="/">
-              <ListItem button key={'Home'} onClick={this.handleDrawerClose}>
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Home'} />
-              </ListItem>
-            </Link>
-            <Link style={{textDecoration: 'none'}} to="/search">
-              <ListItem button key={'Search'} onClick={this.handleDrawerClose}>
-                <ListItemIcon>
-                  <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Search'} />
-              </ListItem>
-            </Link>
-          </List>
+            <div className={classes.drawerHeader}>
+              <IconButton onClick={this.handleDrawerClose}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </div>
+            <Divider />
+            <List>
+              <Link style={{ textDecoration: 'none' }} to="/">
+                <ListItem button key={'Home'} onClick={this.handleDrawerClose}>
+                  <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Home'} />
+                </ListItem>
+              </Link>
+              <Link style={{ textDecoration: 'none' }} to="/search">
+                <ListItem
+                  button
+                  key={'Search'}
+                  onClick={this.handleDrawerClose}
+                >
+                  <ListItemIcon>
+                    <MailIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Search'} />
+                </ListItem>
+              </Link>
+            </List>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.drawerHeader} />
+
           {children}
         </main>
       </div>

@@ -5,6 +5,7 @@ import './App.css';
 import AppBarDrawer from './components/AppBarDrawer';
 import HomePage from './views/HomePage';
 import SearchPage from './views/SearchPage';
+import test2 from './views/test2';
 
 class App extends Component {
   render() {
