@@ -48,7 +48,8 @@ const styles = theme => ({
   content: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundColor: '#ebebeb'
   }
 });
 

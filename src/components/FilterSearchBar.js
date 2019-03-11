@@ -14,7 +14,7 @@ const styles = {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    minWidth: 350,
+    minWidth: 350
   },
   input: {
     marginLeft: 8,
@@ -35,10 +35,9 @@ class SearchBar extends Component {
     super(props);
     this.classes = this.props.classes;
     this.onSearch = this.props.onSearch;
+    this.onFilterChange = this.props.onFilterChange;
     this.state = {
-      open: false,
-      checkedUni: true,
-      checkedCourse: true
+      open: false
     };
   }
 
@@ -49,8 +48,6 @@ class SearchBar extends Component {
   handleFilterDialogClose = () => {
     this.setState({ open: false });
   };
-
-  onFilter = () => {};
 
   render() {
     return (
@@ -74,14 +71,8 @@ class SearchBar extends Component {
         <FilterSearchDialog
           open={this.state.open}
           onClose={this.handleFilterDialogClose}
-          checkedUni={this.state.checkedUni}
-          checkedCourse={this.state.checkedCourse}
-          onUniChecked={(event, checked) =>
-            this.setState({ checkedUni: event.target.checked })
-          }
-          onCourseChecked={(event, checked) =>
-            this.setState({ checkedCourse: event.target.checked })
-          }
+          value={this.props.topic}
+          handleChange={event => this.onFilterChange(event)}
         />
       </Paper>
     );
@@ -89,7 +80,8 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  onFilterChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SearchBar);
