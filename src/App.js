@@ -5,6 +5,7 @@ import './App.css';
 import AppBarDrawer from './components/AppBarDrawer';
 import HomePage from './views/HomePage';
 import SearchPage from './views/SearchPage';
+import ContactPage from './views/ContactPage';
 class App extends Component {
   render() {
     return (
@@ -12,6 +13,7 @@ class App extends Component {
         <AppBarDrawer appName="FindMyStudy">
           <Route exact path="/" component={HomePage} />
           <Route path="/search" component={SearchPage} />
+          <Route path="/contact" component={ContactPage} />
         </AppBarDrawer>
       </Router>
     );
