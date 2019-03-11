@@ -12,7 +12,7 @@ const styles = theme => ({
 
 const images = [
   {
-    url: '/static/images/grid-list/things.jpg',
+    url: 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=beautiful-beauty-blue-414612.jpg&fm=jpg',
     title: 'Take A Survey to find your interests.'
   },
   {

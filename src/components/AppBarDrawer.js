@@ -12,12 +12,12 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Link from 'react-router-dom/Link';
 
 const drawerWidth = 240;
 
@@ -54,7 +54,8 @@ const styles = theme => ({
 
 class AppBarDrawer extends React.Component {
   state = {
-    open: false
+    open: false,
+    redirect: false
   };
 
   handleDrawerOpen = () => {
@@ -66,7 +67,7 @@ class AppBarDrawer extends React.Component {
   };
 
   render() {
-    const { classes, theme, appName, children } = this.props;
+    const { classes, appName, children } = this.props;
     const { open } = this.state;
 
     return (
@@ -102,34 +103,27 @@ class AppBarDrawer extends React.Component {
         >
           <div className={classes.drawerHeader}>
             <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'ltr' ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
+              <ChevronLeftIcon />
             </IconButton>
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
+            <Link style={{textDecoration: 'none'}} to="/">
+              <ListItem button key={'Home'} onClick={this.handleDrawerClose}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={'Home'} />
               </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
+            </Link>
+            <Link style={{textDecoration: 'none'}} to="/search">
+              <ListItem button key={'Search'} onClick={this.handleDrawerClose}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <MailIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={'Search'} />
               </ListItem>
-            ))}
+            </Link>
           </List>
         </Drawer>
         <main className={classes.content}>
@@ -143,7 +137,6 @@ class AppBarDrawer extends React.Component {
 
 AppBarDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired
 };
 
