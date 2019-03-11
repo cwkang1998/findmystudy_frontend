@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CaptionImageButton from '../components/CaptionImageButton';
+import SurveyBtnImage from '../resources/images/survey.jpeg';
+import UniBtnImage from '../resources/images/uni.jpeg';
 
 const styles = theme => ({
   root: {
@@ -12,11 +14,13 @@ const styles = theme => ({
 
 const images = [
   {
-    url: 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=beautiful-beauty-blue-414612.jpg&fm=jpg',
+    key: 1,
+    url: SurveyBtnImage,
     title: 'Take A Survey to find your interests.'
   },
   {
-    url: '/static/images/grid-list/morethings.jpg',
+    key: 2,
+    url: UniBtnImage,
     title: 'Search for University/Courses'
   }
 ];
