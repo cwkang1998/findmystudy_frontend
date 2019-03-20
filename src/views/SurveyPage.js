@@ -42,7 +42,7 @@ class QuizQuestions extends Component {
   async componentDidMount() {
     let res = {};
     try {
-      res = await fetch('http://172.17.0.111:5000/survey');
+      res = await fetch('http://localhost:5000/survey');
     } catch (e) {
       console.log(e);
     }

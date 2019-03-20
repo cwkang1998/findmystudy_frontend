@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -9,6 +10,8 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read http://bit.ly/CRA-PWA
+import OfflineSurveyStorageService from './services/Storage';
+import ApiService from './services/Api';
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -31,6 +34,8 @@ export function register(config) {
       return;
     }
 
+    const surveyStorageService = new OfflineSurveyStorageService();
+    const apiService = new ApiService();
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
@@ -50,6 +55,12 @@ export function register(config) {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
       }
+    });
+
+    window.addEventListener('online', () => {
+      let studentData = surveyStorageService.getStudentData();
+
+      // apiService.createStudent(studentData)
     });
   }
 }

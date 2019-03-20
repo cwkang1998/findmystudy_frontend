@@ -1,151 +1,229 @@
-class ApiService{
-    API_URL = "localhost:5000";
-    constructor(){
+const API_URL = 'localhost:5000';
 
-    }
+export default class ApiService {
+  /**
+   * Login as an admin
+   * @param username
+   * @param password
+   */
+  adminLogin = async (username, password) => {
+    return await fetch(`${API_URL}/admin/login`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      method: 'POST',
+      body: {
+        username: username,
+        password: password
+      }
+    });
+  };
 
-    adminLogin = async () => {
-        return await fetch(`${API_URL}/admin/login`);
-    }
+  /**
+   * Create an admin account
+   * Only accessible by Admin accounts.
+   * @param token authorization token
+   * @param username
+   * @param password
+   */
+  adminSignup = async (token, username, password) => {
+    return await fetch(`${API_URL}/admin/signup`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'POST',
+      body: {
+        username: username,
+        password: password
+      }
+    });
+  };
 
-    adminSignup = async () => {
-        return await fetch(`${API_URL}/admin/signup`);
-    }
+  /**
+   * Gets all bookings.
+   * Only accessible by Admin accounts.
+   * @param token authorization token
+   */
+  getAllBookings = async token => {
+    return await fetch(`${API_URL}/booking`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  };
 
-    getBooking = async () => {
-        return await fetch(`${API_URL}/booking`);
-    }
+  /**
+   * Creates a new booking.
+   * @param data New booking data.
+   * Data must contain _id of student and booking time.
+   * Data must contain either phone number OR email.
+   * Data format: {student, phone_number, email, booking_time}.
+   */
+  createBooking = async data => {
+    return await fetch(`${API_URL}/booking`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      method: 'POST',
+      body: data
+    });
+  };
 
-    createBooking = async () => {
-        return await fetch(`${API_URL}/booking`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'POST',
-            body: JSON.stringify({
-                student: 'Lee xin',
-                phone_number: '911',
-                email: 'unmc@edu.my',
-                booking_time: 'date_time'
-            })
-        })
-    }
+  /**
+   * Get all or specific set of Universities based on query params.
+   * @param nameQuery string to query for universities
+   */
+  getAllUnis = async (nameQuery = '') => {
+    return await fetch(`${API_URL}/uni?q=${nameQuery}`);
+  };
 
-    getUni = async () => {
-        return await fetch(`${API_URL}/uni/:id`);
-    }
+  /**
+   * Get a University
+   * @param id university id
+   */
+  getUni = async id => {
+    return await fetch(`${API_URL}/uni/${id}`);
+  };
 
-    createUni = async () => {
-        return await fetch(`${API_URL}/uni`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'POST',
-            body: JSON.stringify({
-                name: 'unmc',
-                description: 'asd',
-                address: 'broga',
-                country: 'malaysia'
-            })
-        })
-    }
+  /**
+   * Create a new University entry.
+   * Only accessible by Admin accounts.
+   * @param token authorization token
+   */
+  createUni = async (token, data) => {
+    return await fetch(`${API_URL}/uni`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'POST',
+      body: data
+    });
+  };
 
-    updateUni = async () => {
-        return await fetch(`${API_URL}/uni/:id`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'PUT',
-            body: JSON.stringify({
-                name: 'unmc',
-                description: 'asd',
-                address: 'broga',
-                country: 'malaysia'
-            })
-        })
-    }
+  /**
+   * Update an existing new University entry
+   * Only accessible by Admin accounts
+   * @param token authorization token
+   * @param id university id
+   * @param data updating datas
+   */
+  updateUni = async (token, id, data) => {
+    return await fetch(`${API_URL}/uni/${id}`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'PUT',
+      body: data
+    });
+  };
 
-    deleteUni = async () => {
-        return await fetch(`${API_URL}/uni/:id`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'delete',
-            })
-    }
+  /**
+   * Delete an existing new University entry
+   * Only accessible by Admin accounts
+   * @param token authorization token
+   * @param id university id
+   */
+  deleteUni = async (token, id) => {
+    return await fetch(`${API_URL}/uni/${id}`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'DELETE'
+    });
+  };
 
-    getCourse = async () => {
-        return await fetch(`${API_URL}/course/:id`);
-    }
+  /**
+   * Get all students.
+   * Only accessible by Admin accounts.
+   * @param token authorization token
+   */
+  getAllStudents = async token => {
+    return await fetch(`${API_URL}/student`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  };
 
-    createCourse = async () => {
-        return await fetch(`${API_URL}/course`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'POST',
-            body: JSON.stringify({
-                name: 'CS',
-                university: 'UNMC',
-                description: 'sumting',
-                costs: '30,000rm'
-            })
-        })
-    }
+  /**
+   * Get a specific student.
+   * Only accessible by Admin accounts.
+   * @param token authorization token.
+   * @param id id of student.
+   */
+  getStudent = async (token, id) => {
+    return await fetch(`${API_URL}/student/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  };
 
-    updateUni = async () => {
-        return await fetch(`${API_URL}/course/:id`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'PUT',
-            body: JSON.stringify({
-                name: 'CS',
-                university: 'UNMC',
-                description: 'sumting',
-                costs: '30,000rm'
-            })
-        })
-    }
+  /**
+   * Create a new student record
+   * @param data data for the new student
+   */
+  createStudent = async data => {
+    return await fetch(`${API_URL}/student`, {
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      method: 'POST',
+      body: data
+    });
+  };
 
-    deleteCourse = async () => {
-        return await fetch(`${API_URL}/course/:id`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'delete',
-            })
-    }
+  /**
+   * Get all survey questions
+   */
+  getAllSurvey = async () => {
+    return await fetch(`${API_URL}/survey`);
+  };
 
-    getStudent = async () => {
-        return await fetch(`${API_URL}/student/:id`);
-    }
+  /**
+   * Create a new survey questions
+   * Only accessible by Admin accounts.
+   * @param token authorization token.
+   * @param data data for the new questions
+   */
+  createSurvey = async (token, data) => {
+    return await fetch(`${API_URL}/survey`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'POST',
+      body: data
+    });
+  };
 
-    createStudent = async () => {
-        return await fetch(`${API_URL}/student`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'POST',
-            body: JSON.stringify({
-                name: 'Adhik',
-                dob: '1/9/2000', 
-                gender: 'male',
-            })
-        })
-    }
+  /**
+   * update a pre-existing questions
+   * Only accessible by Admin accounts.
+   * @param token authorization token.
+   * @param id id for the survey questions
+   * @param data updated data for the questions
+   */
+  updateUni = async (token, id, data) => {
+    return await fetch(`${API_URL}/survey/${id}`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'PUT',
+      body: data
+    });
+  };
 
-    getAllSurvey = async () => {
-        return await fetch(`${API_URL}/survey`);
-    }
-
-    createSurvey = async () => {
-        return await fetch(`${API_URL}/survey`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'POST',
-            body: JSON.stringify({
-                no: '101',
-                content: 'sumting',
-                color: 'blue'
-            })
-        })
-    }
-
-    updateUni = async () => {
-        return await fetch(`${API_URL}/survey/:id`, {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'PUT',
-            body: JSON.stringify({
-                no: '101',
-                content: 'sumting',
-                color: 'blue'
-            })
-        })
-    }
-
+  /**
+   * Delete a survey question
+   * Only accessible by Admin accounts.
+   * @param token authorization token.
+   * @param id id for the survey questions
+   */
+  deleteSurvey = async (token, id) => {
+    return await fetch(`${API_URL}/survey/${id}`, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      method: 'DELETE'
+    });
+  };
 }
-
