@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import FilterSearchBar from '../components/FilterSearchBar';
 import UniList from '../components/UniList';
-import CourseList from '../components/CourseList';
 
 const styles = {
   container: {
     paddingTop: 16,
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',
     alignItems: 'center'
   },
   searchBar: {
@@ -51,8 +49,7 @@ export default class SearchPage extends Component {
         img:
           'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
       }
-    ],
-    topic: 'uni'
+    ]
   };
 
   onFilterChange = event => {
@@ -69,13 +66,7 @@ export default class SearchPage extends Component {
             onFilterChange={this.onFilterChange}
           />
         </div>
-        {this.state.topic == 'uni' ? (
-          <UniList dataList={dataList} />
-        ) : this.state.topic == 'course' ? (
-          <CourseList dataList={dataList} />
-        ) : (
-          ''
-        )}
+        <UniList dataList={dataList} />
       </div>
     );
   }
