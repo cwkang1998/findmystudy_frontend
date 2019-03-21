@@ -52,9 +52,7 @@ export default class SearchPage extends Component {
     ]
   };
 
-  onFilterChange = event => {
-    this.setState({ topic: event.target.value });
-  };
+  onFilterChange = event => {};
 
   render() {
     const { dataList } = this.state;

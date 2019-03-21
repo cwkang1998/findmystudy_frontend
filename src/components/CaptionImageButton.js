@@ -74,13 +74,14 @@ const styles = theme => ({
 
 class CaptionImageButton extends Component {
   render() {
-    const { classes, title, imageURL, grow, height, width } = this.props;
+    const { classes, title, imageURL, onClick, grow, height, width } = this.props;
     let actualHeight = height ? height : 100;
     let actualWidth = width ? width : 300;
     return (
       <ButtonBase
         focusRipple
         key={title}
+        onClick={onClick}
         className={classes.image}
         focusVisibleClassName={classes.focusVisible}
         style={

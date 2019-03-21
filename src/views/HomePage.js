@@ -11,28 +11,27 @@ const styles = theme => ({
     flexWrap: 'wrap'
   }
 });
-
-const images = [
-  {
-    key: 1,
-    url: SurveyBtnImage,
-    title: 'Take A Survey to find your interests.'
-  },
-  {
-    key: 2,
-    url: UniBtnImage,
-    title: 'Search for University/Courses'
-  }
-];
-
 class HomePage extends Component {
+  navigateTo = destinationURL => {
+    this.props.history.push(destinationURL);
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {images.map(image => (
-          <CaptionImageButton grow title={image.title} imageURL={image.url} />
-        ))}
+        <CaptionImageButton
+          grow
+          title={'Take A Survey to find your interests.'}
+          imageURL={SurveyBtnImage}
+          onClick={() => this.navigateTo('/survey')}
+        />
+        <CaptionImageButton
+          grow
+          title={'Search for Universities'}
+          imageURL={UniBtnImage}
+          onClick={() => this.navigateTo('/search')}
+        />
       </div>
     );
   }

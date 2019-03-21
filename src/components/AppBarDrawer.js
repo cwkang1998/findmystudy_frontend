@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -52,7 +52,7 @@ const styles = theme => ({
   }
 });
 
-class AppBarDrawer extends React.Component {
+class AppBarDrawer extends Component {
   state = {
     open: false
   };
