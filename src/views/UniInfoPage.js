@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import NottIcon from '../icons/Nottingham-Logo.jpg';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -45,6 +46,14 @@ const styles = theme => ({
     paddingLeft: 16,
     paddingRight: 16,
     textAlign: 'justify'
+  },
+  buttonContainer: {
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'right'
+    },
+    margin: 24,
+
+    textAlign: 'center'
   }
 });
 
@@ -64,7 +73,7 @@ class UniInfo extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     return (
       // Banner Image
       <Grid container className={classes.root}>
@@ -111,6 +120,17 @@ class UniInfo extends Component {
           <Typography className={classes.content}>
             21 Lower Kent Ridge Rd, Singapore 119077
           </Typography>
+        </Grid>
+
+        {/* Go to Bookings */}
+        <Grid item xs={12} className={classes.buttonContainer}>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => history.push('/contact')}
+          >
+            Book for an Enquiry
+          </Button>
         </Grid>
       </Grid>
     );

@@ -5,12 +5,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
-import { amber, deepOrange } from '@material-ui/core/colors';
+import { amber, orange } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
   palette: {
     primary: amber,
-    secondary: deepOrange
+    secondary: orange
   },
   typography: {
     useNextVariants: true
