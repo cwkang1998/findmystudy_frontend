@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Button from '@material-ui/core/Button';
@@ -40,7 +39,7 @@ class QuizQuestions extends Component {
   };
 
   async componentDidMount() {
-    let data = {};
+    let data = [];
     try {
       let res = await fetch('http://localhost:5000/survey');
       data = await res.json();
