@@ -10,10 +10,6 @@ const styles = {
     marginRight: 16,
     marginLeft: 16,
     marginTop: 16
-  },
-  media: {
-    height: 150,
-    // paddingTop: 56.25%
   }
 };
 
@@ -30,7 +26,6 @@ class UniList extends React.Component {
                   <CardHeader title={data.title} />
                   <CardMedia
                     component="img"
-                    style={styles.media}
                     image={data.img}
                     title={data.title}
                   />

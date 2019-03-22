@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -94,8 +94,9 @@ class AppBarDrawer extends Component {
           </Toolbar>
         </AppBar>
 
-        <Drawer
+        <SwipeableDrawer
           open={open}
+          onOpen={this.handleDrawerOpen}
           onClose={this.handleDrawerClose}
           classes={{
             paper: classes.drawerPaper
@@ -149,7 +150,7 @@ class AppBarDrawer extends Component {
               </ListItem>
             </Link>
           </List>
-        </Drawer>
+        </SwipeableDrawer>
 
         <main className={classes.content}>
           <div className={classes.drawerHeader} />

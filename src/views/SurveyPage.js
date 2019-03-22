@@ -40,20 +40,19 @@ class QuizQuestions extends Component {
   };
 
   async componentDidMount() {
-    let res = {};
+    let data = {};
     try {
-      res = await fetch('http://localhost:5000/survey');
+      let res = await fetch('http://localhost:5000/survey');
+      data = await res.json();
     } catch (e) {
       console.log(e);
     }
-    let data = await res.json();
     this.setState({ questions: data });
   }
 
   proceedBack = () => {
     let currentEndIndex = this.state.startIndex;
-    if (this.state.questions.length === 0) {
-    } else if (currentEndIndex > 0) {
+    if (currentEndIndex > 0) {
       this.setState({
         showBackBtn: currentEndIndex <= 10 ? false : true,
         startIndex: currentEndIndex - 10,
@@ -64,8 +63,7 @@ class QuizQuestions extends Component {
 
   proceedNext = () => {
     let currentEndIndex = this.state.endIndex;
-    if (this.state.questions.length === 0) {
-    } else if (this.state.questions.length <= this.state.endIndex) {
+    if (this.state.questions.length <= this.state.endIndex) {
       this.setState({ endIndex: this.state.questions.length });
     } else if (currentEndIndex < this.state.questions.length) {
       this.setState({

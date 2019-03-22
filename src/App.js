@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import AppBarDrawer from './components/AppBarDrawer';
 import HomePage from './views/HomePage';
-import SearchPage from './views/SearchPage';
+import UniSearchPage from './views/UniSearchPage';
 import ContactPage from './views/ContactPage';
 import SurveyPage from './views/SurveyPage';
+import UniInfoPage from './views/UniInfoPage';
+
 class App extends Component {
   render() {
     return (
@@ -13,7 +15,8 @@ class App extends Component {
         <AppBarDrawer appName="FindMyStudy">
           <Route exact path="/" component={HomePage} />
           <Route path="/survey" component={SurveyPage} />
-          <Route path="/search" component={SearchPage} />
+          <Route exact path="/search" component={UniSearchPage} />
+          <Route path="/search/:id" component={UniInfoPage} />
           <Route path="/contact" component={ContactPage} />
         </AppBarDrawer>
       </Router>
