@@ -128,12 +128,12 @@ class AppBarDrawer extends Component {
               </ListItem>
             </Link>
             {/* Search */}
-            <Link style={{ textDecoration: 'none' }} to="/search">
-              <ListItem button key={'Search'} onClick={this.handleDrawerClose}>
+            <Link style={{ textDecoration: 'none' }} to="/uni">
+              <ListItem button key={'University'} onClick={this.handleDrawerClose}>
                 <ListItemIcon>
                   <MailIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Search'} />
+                <ListItemText primary={'University'} />
               </ListItem>
             </Link>
             {/* Contact Us */}

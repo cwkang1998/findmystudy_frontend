@@ -15,8 +15,8 @@ class App extends Component {
         <AppBarDrawer appName="FindMyStudy">
           <Route exact path="/" component={HomePage} />
           <Route path="/survey" component={SurveyPage} />
-          <Route exact path="/search" component={UniSearchPage} />
-          <Route path="/search/:id" component={UniInfoPage} />
+          <Route exact path="/uni" component={UniSearchPage} />
+          <Route path="/uni/:id" component={UniInfoPage} />
           <Route path="/contact" component={ContactPage} />
         </AppBarDrawer>
       </Router>

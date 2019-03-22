@@ -30,7 +30,7 @@ class HomePage extends Component {
           grow
           title={'Search for Universities'}
           imageURL={UniBtnImage}
-          onClick={() => this.navigateTo('/search')}
+          onClick={() => this.navigateTo('/uni')}
         />
       </div>
     );
