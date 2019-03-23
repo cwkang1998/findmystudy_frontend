@@ -6,7 +6,7 @@ import Phone from '../resources/icons/phone.png';
 import Address from '../resources/icons/address.png';
 import Skype from '../resources/icons/skype.png';
 
-class SurveyResultPage extends Component {
+class ResultPage extends Component {
   render() {
     return (
       <div>
@@ -58,4 +58,4 @@ const divStyle = {
   color: 'darkblue'
 };
 
-export default SurveyResultPage;
+export default ResultPage;

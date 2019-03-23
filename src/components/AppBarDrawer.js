@@ -118,13 +118,13 @@ class AppBarDrawer extends Component {
                 <ListItemText primary={'Home'} />
               </ListItem>
             </Link>
-            {/* Survey */}
-            <Link style={{ textDecoration: 'none' }} to="/survey">
-              <ListItem button key={'Survey'} onClick={this.handleDrawerClose}>
+            {/* Quiz */}
+            <Link style={{ textDecoration: 'none' }} to="/quiz">
+              <ListItem button key={'Personality Quiz'} onClick={this.handleDrawerClose}>
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Survey'} />
+                <ListItemText primary={'Personality Quiz'} />
               </ListItem>
             </Link>
             {/* Search */}

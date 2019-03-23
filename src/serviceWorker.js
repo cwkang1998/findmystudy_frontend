@@ -10,7 +10,7 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read http://bit.ly/CRA-PWA
-import OfflineSurveyStorageService from './services/Storage';
+import OfflineQuizStorageService from './services/Storage';
 import ApiService from './services/Api';
 
 const isLocalhost = Boolean(
@@ -34,7 +34,7 @@ export function register(config) {
       return;
     }
 
-    const surveyStorageService = new OfflineSurveyStorageService();
+    const quizStorageService = new OfflineQuizStorageService();
     const apiService = new ApiService();
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
@@ -58,7 +58,7 @@ export function register(config) {
     });
 
     window.addEventListener('online', () => {
-      let studentData = surveyStorageService.getStudentData();
+      let studentData = quizStorageService.getStudentData();
 
       // apiService.createStudent(studentData)
     });

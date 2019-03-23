@@ -5,7 +5,7 @@ import AppBarDrawer from './components/AppBarDrawer';
 import HomePage from './views/HomePage';
 import UniSearchPage from './views/UniSearchPage';
 import ContactPage from './views/ContactPage';
-import SurveyPage from './views/SurveyPage';
+import QuizPage from '././views/QuizPage';
 import UniInfoPage from './views/UniInfoPage';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
       <Router>
         <AppBarDrawer appName="FindMyStudy">
           <Route exact path="/" component={HomePage} />
-          <Route path="/survey" component={SurveyPage} />
+          <Route path="/quiz" component={QuizPage} />
           <Route exact path="/uni" component={UniSearchPage} />
           <Route path="/uni/:id" component={UniInfoPage} />
           <Route path="/contact" component={ContactPage} />

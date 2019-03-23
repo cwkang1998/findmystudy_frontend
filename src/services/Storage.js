@@ -1,11 +1,11 @@
 const localStorage = window.localStorage;
 
-class OfflineSurveyStorageService {
-  saveSurveyQuestions = questions => {
+class OfflineQuizStorageService {
+  saveQuizQuestions = questions => {
     localStorage.setItem('questions', questions);
   };
 
-  getSurveyQuestions = () => {
+  getQuizQuestions = () => {
     let data = localStorage.getItem('questions');
     let questions = null;
     if (data != null) {
@@ -38,5 +38,5 @@ class OfflineSurveyStorageService {
 }
 
 export default {
-  OfflineSurveyStorageService
+  OfflineQuizStorageService
 };

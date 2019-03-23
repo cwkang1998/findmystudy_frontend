@@ -372,7 +372,7 @@ class ContactPage extends Component {
                 fullWidth
                 className={classes.formItems}
                 style={{ marginTop: 24 }}
-                onClick={() => this.props.history.push('/survey')}
+                onClick={() => this.props.history.push('/quiz')}
               >
                 Take the personality quiz
               </Button>

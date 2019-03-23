@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CaptionImageButton from '../components/CaptionImageButton';
-import SurveyBtnImage from '../resources/images/survey.jpeg';
+import QuizBtnImage from '../resources/images/quiz.jpeg';
 import UniBtnImage from '../resources/images/uni.jpeg';
 
 const styles = theme => ({
@@ -22,9 +22,9 @@ class HomePage extends Component {
       <div className={classes.root}>
         <CaptionImageButton
           grow
-          title={'Take A Survey to find your interests.'}
-          imageURL={SurveyBtnImage}
-          onClick={() => this.navigateTo('/survey')}
+          title={'Take A Quiz to find your interests.'}
+          imageURL={QuizBtnImage}
+          onClick={() => this.navigateTo('/quiz')}
         />
         <CaptionImageButton
           grow

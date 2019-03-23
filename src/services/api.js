@@ -170,19 +170,19 @@ export default class ApiService {
   };
 
   /**
-   * Get all survey questions
+   * Get all quiz questions
    */
-  getAllSurvey = async () => {
+  getAllQuiz = async () => {
     return await fetch(`${API_URL}/survey`);
   };
 
   /**
-   * Create a new survey questions
+   * Create a new quiz questions
    * Only accessible by Admin accounts.
    * @param token authorization token.
    * @param data data for the new questions
    */
-  createSurvey = async (token, data) => {
+  createQuiz = async (token, data) => {
     return await fetch(`${API_URL}/survey`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -197,7 +197,7 @@ export default class ApiService {
    * update a pre-existing questions
    * Only accessible by Admin accounts.
    * @param token authorization token.
-   * @param id id for the survey questions
+   * @param id id for the quiz questions
    * @param data updated data for the questions
    */
   updateUni = async (token, id, data) => {
@@ -212,12 +212,12 @@ export default class ApiService {
   };
 
   /**
-   * Delete a survey question
+   * Delete a quiz question
    * Only accessible by Admin accounts.
    * @param token authorization token.
-   * @param id id for the survey questions
+   * @param id id for the quiz questions
    */
-  deleteSurvey = async (token, id) => {
+  deleteQuiz = async (token, id) => {
     return await fetch(`${API_URL}/survey/${id}`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
