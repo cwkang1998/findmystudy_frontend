@@ -15,10 +15,13 @@ import Phone from '../resources/icons/phone.png';
 import Address from '../resources/icons/address.png';
 import Skype from '../resources/icons/skype.png';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+import Link from 'react-router-dom/Link';
 
 const styles = theme => ({
   titleText: {
     fontSize: 48,
+    fontWeight: 600,
     margin: 16,
     color: '#e67e00'
   },
@@ -34,6 +37,9 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row'
   },
+  physicalContactsContent: {
+    alignSelf: 'center'
+  },
   forms: {
     padding: 32,
     width: '100%',
@@ -44,6 +50,18 @@ const styles = theme => ({
   formItems: {
     marginTop: 16,
     marginBottom: 4
+  },
+  thankMsg: {
+    textAlign: 'center',
+    padding: 8
+  },
+  thankMsgTitle: {
+    padding: 8,
+    fontSize: 24,
+    fontWeight: 400
+  },
+  thankMsgContent: {
+    fontSize: 16
   }
 });
 class ContactPage extends Component {
@@ -65,7 +83,9 @@ class ContactPage extends Component {
     emailErrorMsg: '',
     emailError: false,
     bookingErrorMsg: '',
-    bookingError: false
+    bookingError: false,
+    submitted: false,
+    quizTaken: false
   };
 
   handleChange = name => event => {
@@ -79,11 +99,85 @@ class ContactPage extends Component {
     }
   };
 
+  requiredFieldValidation = () => {
+    let valid = true;
+    const { name, dob, gender, booking } = this.state;
+    const required = { name, dob, gender, booking };
+
+    Object.keys(required).forEach(key => {
+      if (!required[key]) {
+        valid = false;
+        this.setState({
+          [`${key}Error`]: true,
+          [`${key}ErrorMsg`]: 'This field is required.'
+        });
+      }
+    });
+    return valid;
+  };
+
+  phoneOrEmailRequiredValidation = () => {
+    if (!(this.state.phone || this.state.email)) {
+      this.setState({
+        phoneError: true,
+        phoneErrorMsg: 'Either phone no. or email should be provided.',
+        emailError: true,
+        emailErrorMsg: 'Either phone no. or email should be provided.'
+      });
+      return false;
+    }
+    return true;
+  };
+
+  phoneNumberValidation = () => {
+    if (this.state.phone && !this.state.phone.match(/^\d{10,11}$/)) {
+      this.setState({
+        phone: '',
+        phoneError: true,
+        phoneErrorMsg: 'Invalid phone number.'
+      });
+      return false;
+    }
+    return true;
+  };
+
+  emailValidation = () => {
+    if (
+      this.state.email &&
+      !this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    ) {
+      this.setState({
+        email: '',
+        emailError: true,
+        emailErrorMsg: 'Invalid email address.'
+      });
+      return false;
+    }
+    return true;
+  };
+
+  dateAfterTodayValidation = () => {
+    const todayDate = new Date();
+    const startSeconds = Date.parse(
+      `${todayDate.getFullYear()}-${todayDate.getMonth()}-${todayDate.getDate()}`
+    );
+    if (Date.parse(this.state.booking) < startSeconds) {
+      this.setState({
+        booking: '',
+        bookingError: true,
+        bookingErrorMsg: 'Date chosen must be in the future.'
+      });
+      return false;
+    }
+    return true;
+  };
+
   validateAndSubmit = () => {
     const { name, dob, gender, phone, email, booking } = this.state;
     const all = { name, dob, gender, phone, email, booking };
-    const required = { name, dob, gender, booking };
+
     let validatedFlag = true;
+
     //reset
     Object.keys(all).forEach(key => {
       this.setState({
@@ -92,71 +186,30 @@ class ContactPage extends Component {
       });
     });
 
-    //Required validate
-    Object.keys(required).forEach(key => {
-      if (!required[key]) {
-        validatedFlag = false;
-        this.setState({
-          [`${key}Error`]: true,
-          [`${key}ErrorMsg`]: 'This field is required.'
-        });
-      }
-    });
+    // Date Validation
+    validatedFlag = this.requiredFieldValidation();
+    validatedFlag = this.phoneOrEmailRequiredValidation();
+    validatedFlag = this.phoneNumberValidation();
+    validatedFlag = this.emailValidation();
+    validatedFlag = this.dateAfterTodayValidation();
 
-    //Either exist validation
-    if (!(phone || email)) {
-      validatedFlag = false;
-      this.setState({
-        phoneError: true,
-        phoneErrorMsg: 'Either phone no. or email should be provided.',
-        emailError: true,
-        emailErrorMsg: 'Either phone no. or email should be provided.'
-      });
-    }
-    //Phone number validation
-    if (phone && !phone.match(/^\d{10,11}$/)) {
-      validatedFlag = false;
-      this.setState({
-        phone: '',
-        phoneError: true,
-        phoneErrorMsg: 'Invalid phone number.'
-      });
-    }
-    //Email validation
-    if (
-      email &&
-      !email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
-    ) {
-      validatedFlag = false;
-      this.setState({
-        email: '',
-        emailError: true,
-        emailErrorMsg: 'Invalid email address.'
-      });
-    }
-    // Booking date validation
-    const startSeconds = Date.now();
-    if (Date.parse(this.state.booking) < startSeconds) {
-      this.setState({
-        booking: '',
-        bookingError: true,
-        bookingErrorMsg: 'Date chosen must be in the future.'
-      });
-    }
     if (validatedFlag) {
-      console.log('senddata');
+      this.setState({ submitted: true });
     }
-    console.log(this.state);
   };
 
   render() {
     const { classes } = this.props;
     return (
       <div>
+        {/* Title */}
         <Grid container direction="column" alignItems="center">
           <Grid item xs={12}>
-            <h1 className={classes.titleText}>Contact Us</h1>
+            <h1>
+              <Typography className={classes.titleText}>Contact Us</Typography>
+            </h1>
           </Grid>
+
           {/* E-contacts */}
           <Grid item xs={12}>
             <a href="mailto:ck@mystudy.my?subject=Booking an appointment">
@@ -177,126 +230,154 @@ class ContactPage extends Component {
             </a>
           </Grid>
 
+          {/* Display based on form submission */}
           <Grid item xs={12} className={classes.forms}>
-            <form onKeyPress={this.formOnEnterKey.bind(this)}>
-              <TextField
-                id="name"
-                label="Name"
-                fullWidth
-                value={this.state.name}
-                onChange={this.handleChange('name')}
-                margin="normal"
-                placeholder="MyName"
-                required
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.formItems}
-                helperText={this.state.nameErrorMsg}
-                error={this.state.nameError}
-              />
-              <TextField
-                id="dob"
-                label="Date of Birth"
-                fullWidth
-                value={this.state.dob}
-                type="date"
-                onChange={this.handleChange('dob')}
-                margin="normal"
-                required
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.formItems}
-                helperText={this.state.dobErrorMsg}
-                error={this.state.dobError}
-              />
+            {this.state.submitted ? (
+              <div className={classes.thankMsg}>
+                <Typography className={classes.thankMsgTitle}>
+                  Thank you.{' '}
+                </Typography>
+                <Typography className={classes.thankMsgContent}>
+                  We have received your request to book for an appointment and
+                  will contact you soon.
+                </Typography>
+              </div>
+            ) : (
+              <form onKeyPress={this.formOnEnterKey.bind(this)}>
+                <TextField
+                  id="name"
+                  label="Name"
+                  fullWidth
+                  value={this.state.name}
+                  onChange={this.handleChange('name')}
+                  margin="normal"
+                  placeholder="MyName"
+                  required
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.formItems}
+                  helperText={this.state.nameErrorMsg}
+                  error={this.state.nameError}
+                />
+                <TextField
+                  id="dob"
+                  label="Date of Birth"
+                  fullWidth
+                  value={this.state.dob}
+                  type="date"
+                  onChange={this.handleChange('dob')}
+                  margin="normal"
+                  required
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.formItems}
+                  helperText={this.state.dobErrorMsg}
+                  error={this.state.dobError}
+                />
 
-              <FormControl
-                fullWidth
-                required
-                className={classes.formItems}
-                error={this.state.genderError}
-              >
-                <InputLabel shrink htmlFor="gender">
-                  Gender
-                </InputLabel>
-                <Select
-                  value={this.state.gender}
-                  onChange={this.handleChange('gender')}
-                  input={<Input name="gender" id="gender" />}
-                  name="gender"
+                <FormControl
+                  fullWidth
+                  required
+                  className={classes.formItems}
+                  error={this.state.genderError}
                 >
-                  <MenuItem value={'Male'}>Male</MenuItem>
-                  <MenuItem value={'Female'}>Female</MenuItem>
-                </Select>
-                <FormHelperText error={this.state.genderError}>
-                  {this.state.genderErrorMsg}
-                </FormHelperText>
-              </FormControl>
+                  <InputLabel shrink htmlFor="gender">
+                    Gender
+                  </InputLabel>
+                  <Select
+                    value={this.state.gender}
+                    onChange={this.handleChange('gender')}
+                    input={<Input name="gender" id="gender" />}
+                    name="gender"
+                  >
+                    <MenuItem value={'Male'}>Male</MenuItem>
+                    <MenuItem value={'Female'}>Female</MenuItem>
+                  </Select>
+                  <FormHelperText error={this.state.genderError}>
+                    {this.state.genderErrorMsg}
+                  </FormHelperText>
+                </FormControl>
 
-              <TextField
-                id="phone"
-                label="Phone"
-                fullWidth
-                value={this.state.phone}
-                type="phone"
-                onChange={this.handleChange('phone')}
-                margin="normal"
-                placeholder="0123456789"
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.formItems}
-                helperText={this.state.phoneErrorMsg}
-                error={this.state.phoneError}
-              />
+                <TextField
+                  id="phone"
+                  label="Phone"
+                  fullWidth
+                  value={this.state.phone}
+                  type="phone"
+                  onChange={this.handleChange('phone')}
+                  margin="normal"
+                  placeholder="0123456789"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.formItems}
+                  helperText={this.state.phoneErrorMsg}
+                  error={this.state.phoneError}
+                />
 
-              <TextField
-                id="email"
-                label="Email"
-                fullWidth
-                value={this.state.email}
-                type="email"
-                onChange={this.handleChange('email')}
-                margin="normal"
-                placeholder="myemail@email.com"
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.formItems}
-                helperText={this.state.emailErrorMsg}
-                error={this.state.emailError}
-              />
-              <TextField
-                id="booking"
-                label="Booking Date"
-                fullWidth
-                value={this.state.booking}
-                type="date"
-                onChange={this.handleChange('booking')}
-                onBlur={this.validateDate}
-                margin="normal"
-                required
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.formItems}
-                helperText={this.state.bookingErrorMsg}
-                error={this.state.bookingError}
-              />
+                <TextField
+                  id="email"
+                  label="Email"
+                  fullWidth
+                  value={this.state.email}
+                  type="email"
+                  onChange={this.handleChange('email')}
+                  margin="normal"
+                  placeholder="myemail@email.com"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.formItems}
+                  helperText={this.state.emailErrorMsg}
+                  error={this.state.emailError}
+                />
+                <TextField
+                  id="booking"
+                  label="Booking Date"
+                  fullWidth
+                  value={this.state.booking}
+                  type="date"
+                  onChange={this.handleChange('booking')}
+                  onBlur={this.validateDate}
+                  margin="normal"
+                  required
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.formItems}
+                  helperText={this.state.bookingErrorMsg}
+                  error={this.state.bookingError}
+                />
+                <Button
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                  className={classes.formItems}
+                  onClick={this.validateAndSubmit}
+                >
+                  Book an appointment
+                </Button>
+              </form>
+            )}
+
+            {/* Dont show if quiz was taken(Redirected from quiz) */}
+            {this.state.quizTaken ? (
+              <div />
+            ) : (
               <Button
-                color="primary"
+                color="secondary"
                 variant="contained"
                 fullWidth
                 className={classes.formItems}
-                onClick={this.validateAndSubmit}
+                style={{ marginTop: 24 }}
+                onClick={() => this.props.history.push('/survey')}
               >
-                Book an appointment
+                Take the personality quiz
               </Button>
-            </form>
+            )}
           </Grid>
-
           {/* Physical Contacts */}
           <Grid item xs={12} className={classes.physicalContacts}>
             <Divider />
@@ -308,7 +389,9 @@ class ContactPage extends Component {
                   className={classes.fixedIcon}
                 />
               </a>
-              <p>+60134751197</p>
+              <Typography className={classes.physicalContactsContent}>
+                +60134751197
+              </Typography>
             </div>
             <div className={classes.physicalContactsItems}>
               <a href="https://www.google.com/search?rlz=1C1GCEA_enMY805MY805&tbm=lcl&ei=QKVrXJueKMLWwAKnyqIY&q=mystudy&oq=mystudy&gs_l=psy-ab.3...4758.4912.0.5120.2.2.0.0.0.0.0.0..0.0....0...1c.1.64.psy-ab..2.0.0....0.IV3soXW7TJA#rlfi=hd:;si:2025452943986851701;mv:!1m2!1d3.1964837773190293!2d101.6795426577346!2m2!1d3.1961238226809696!2d101.67918214226542">
@@ -318,10 +401,10 @@ class ContactPage extends Component {
                   className={classes.fixedIcon}
                 />
               </a>
-              <p>
+              <Typography className={classes.physicalContactsContent}>
                 CK CHIAU ADVISORY 3-1-3, Cantonment Exchange, 698, Jalan Sultan
                 Azlan Shah (Jalan Ipoh), 51200 Kuala Lumpur.
-              </p>
+              </Typography>
             </div>
           </Grid>
         </Grid>
