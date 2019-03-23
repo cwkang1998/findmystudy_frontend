@@ -19,6 +19,7 @@ import Divider from '@material-ui/core/Divider';
 const styles = theme => ({
   titleText: {
     fontSize: 48,
+    margin: 16,
     color: '#e67e00'
   },
   fixedIcon: {
@@ -52,6 +53,7 @@ class ContactPage extends Component {
     gender: '',
     phone: '',
     email: '',
+    booking: '',
     nameErrorMsg: '',
     nameError: false,
     dobErrorMsg: '',
@@ -61,7 +63,9 @@ class ContactPage extends Component {
     phoneErrorMsg: '',
     phoneError: false,
     emailErrorMsg: '',
-    emailError: false
+    emailError: false,
+    bookingErrorMsg: '',
+    bookingError: false
   };
 
   handleChange = name => event => {
@@ -76,9 +80,9 @@ class ContactPage extends Component {
   };
 
   validateAndSubmit = () => {
-    const { name, dob, gender, phone, email } = this.state;
-    const all = { name, dob, gender, phone, email };
-    const required = { name, dob, gender };
+    const { name, dob, gender, phone, email, booking } = this.state;
+    const all = { name, dob, gender, phone, email, booking };
+    const required = { name, dob, gender, booking };
     let validatedFlag = true;
     //reset
     Object.keys(all).forEach(key => {
@@ -128,6 +132,15 @@ class ContactPage extends Component {
         email: '',
         emailError: true,
         emailErrorMsg: 'Invalid email address.'
+      });
+    }
+    // Booking date validation
+    const startSeconds = Date.now();
+    if (Date.parse(this.state.booking) < startSeconds) {
+      this.setState({
+        booking: '',
+        bookingError: true,
+        bookingErrorMsg: 'Date chosen must be in the future.'
       });
     }
     if (validatedFlag) {
@@ -255,6 +268,23 @@ class ContactPage extends Component {
                 helperText={this.state.emailErrorMsg}
                 error={this.state.emailError}
               />
+              <TextField
+                id="booking"
+                label="Booking Date"
+                fullWidth
+                value={this.state.booking}
+                type="date"
+                onChange={this.handleChange('booking')}
+                onBlur={this.validateDate}
+                margin="normal"
+                required
+                InputLabelProps={{
+                  shrink: true
+                }}
+                className={classes.formItems}
+                helperText={this.state.bookingErrorMsg}
+                error={this.state.bookingError}
+              />
               <Button
                 color="primary"
                 variant="contained"
@@ -262,7 +292,7 @@ class ContactPage extends Component {
                 className={classes.formItems}
                 onClick={this.validateAndSubmit}
               >
-                Submit
+                Book an appointment
               </Button>
             </form>
           </Grid>

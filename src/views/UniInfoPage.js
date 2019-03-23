@@ -129,7 +129,7 @@ class UniInfo extends Component {
             variant="contained"
             onClick={() => history.push('/contact')}
           >
-            Book for an Enquiry
+            Make an Enquiry
           </Button>
         </Grid>
       </Grid>
