@@ -120,7 +120,11 @@ class AppBarDrawer extends Component {
             </Link>
             {/* Quiz */}
             <Link style={{ textDecoration: 'none' }} to="/quiz">
-              <ListItem button key={'Personality Quiz'} onClick={this.handleDrawerClose}>
+              <ListItem
+                button
+                key={'Personality Quiz'}
+                onClick={this.handleDrawerClose}
+              >
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
@@ -129,7 +133,11 @@ class AppBarDrawer extends Component {
             </Link>
             {/* Search */}
             <Link style={{ textDecoration: 'none' }} to="/uni">
-              <ListItem button key={'University'} onClick={this.handleDrawerClose}>
+              <ListItem
+                button
+                key={'University'}
+                onClick={this.handleDrawerClose}
+              >
                 <ListItemIcon>
                   <MailIcon />
                 </ListItemIcon>

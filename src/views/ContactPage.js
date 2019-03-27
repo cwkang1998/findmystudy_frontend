@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { withStyles, Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -16,7 +17,6 @@ import Address from '../resources/icons/address.png';
 import Skype from '../resources/icons/skype.png';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import Link from 'react-router-dom/Link';
 
 const styles = theme => ({
   titleText: {
@@ -202,8 +202,8 @@ class ContactPage extends Component {
     const { classes } = this.props;
     return (
       <div>
-        {/* Title */}
         <Grid container direction="column" alignItems="center">
+          {/* Title */}
           <Grid item xs={12}>
             <h1>
               <Typography className={classes.titleText}>Contact Us</Typography>
