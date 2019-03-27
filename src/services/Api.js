@@ -1,4 +1,4 @@
-const API_URL = 'localhost:5000';
+const API_URL = 'http://localhost:5000';
 
 export default class ApiService {
   /**
@@ -64,7 +64,7 @@ export default class ApiService {
         'Content-Type': 'application/json; charset=utf-8'
       },
       method: 'POST',
-      body: data
+      body: JSON.stringify(data)
     });
   };
 
@@ -96,7 +96,7 @@ export default class ApiService {
         Authorization: `Bearer ${token}`
       },
       method: 'POST',
-      body: data
+      body: JSON.stringify(data)
     });
   };
 
@@ -114,7 +114,7 @@ export default class ApiService {
         Authorization: `Bearer ${token}`
       },
       method: 'PUT',
-      body: data
+      body: JSON.stringify(data)
     });
   };
 
@@ -165,7 +165,20 @@ export default class ApiService {
     return await fetch(`${API_URL}/student`, {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
       method: 'POST',
-      body: data
+      body: JSON.stringify(data)
+    });
+  };
+
+  /**
+   * Update a student record
+   * @param id _id of the student
+   * @param data new data for the student
+   */
+  updateStudent = async (id, data) => {
+    return await fetch(`${API_URL}/student/${id}`, {
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      method: 'PUT',
+      body: JSON.stringify(data)
     });
   };
 
@@ -189,7 +202,7 @@ export default class ApiService {
         Authorization: `Bearer ${token}`
       },
       method: 'POST',
-      body: data
+      body: JSON.stringify(data)
     });
   };
 
@@ -207,7 +220,7 @@ export default class ApiService {
         Authorization: `Bearer ${token}`
       },
       method: 'PUT',
-      body: data
+      body: JSON.stringify(data)
     });
   };
 

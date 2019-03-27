@@ -1,12 +1,14 @@
-const localStorage = window.localStorage;
+export default class OfflineQuizStorageService {
+  constructor() {
+    this.localStorage = window.localStorage;
+  }
 
-class OfflineQuizStorageService {
   saveQuizQuestions = questions => {
-    localStorage.setItem('questions', questions);
+    this.localStorage.setItem('questions', questions);
   };
 
   getQuizQuestions = () => {
-    let data = localStorage.getItem('questions');
+    let data = this.localStorage.getItem('questions');
     let questions = null;
     if (data != null) {
       questions = JSON.parse(data);
@@ -15,11 +17,11 @@ class OfflineQuizStorageService {
   };
 
   saveStudentData = studentData => {
-    localStorage.setItem('student', studentData);
+    this.localStorage.setItem('student', JSON.stringify(studentData));
   };
 
   getStudentData = () => {
-    let data = localStorage.getItem('student');
+    let data = this.localStorage.getItem('student');
     let studentData = null;
     if (data != null) {
       studentData = JSON.parse(data);
@@ -29,14 +31,10 @@ class OfflineQuizStorageService {
   };
 
   removeStudentData = () => {
-    localStorage.removeItem('student');
+    this.localStorage.removeItem('student');
   };
 
   resetStorage = () => {
-    localStorage.clear();
+    this.localStorage.clear();
   };
 }
-
-export default {
-  OfflineQuizStorageService
-};
