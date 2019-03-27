@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import NottIcon from '../icons/Nottingham-Logo.jpg';
+import NottIcon from '../resources/icons/Nottingham-Logo.jpg';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
