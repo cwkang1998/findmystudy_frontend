@@ -119,8 +119,8 @@ class UniInfo extends Component {
                   <ListItem divider>
                     <Typography variant="h6">Popular Courses</Typography>
                   </ListItem>
-                  {uniData.courses.map(e => (
-                    <ListItem>{e}</ListItem>
+                  {uniData.courses.map((e, index) => (
+                    <ListItem key={index}>{e}</ListItem>
                   ))}
                 </List>
               </Paper>
