@@ -20,7 +20,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   titleText: {
-    fontSize: 48,
+    fontSize: 36,
     fontWeight: 600,
     margin: 16,
     color: '#e67e00'
@@ -157,10 +157,7 @@ class ContactPage extends Component {
   };
 
   dateAfterTodayValidation = () => {
-    const todayDate = new Date();
-    const startSeconds = Date.parse(
-      `${todayDate.getFullYear()}-${todayDate.getMonth()}-${todayDate.getDate()}`
-    );
+    let startSeconds = Date.now();
     if (Date.parse(this.state.booking) < startSeconds) {
       this.setState({
         booking: '',
@@ -176,8 +173,6 @@ class ContactPage extends Component {
     const { name, dob, gender, phone, email, booking } = this.state;
     const all = { name, dob, gender, phone, email, booking };
 
-    let validatedFlag = true;
-
     //reset
     Object.keys(all).forEach(key => {
       this.setState({
@@ -186,14 +181,13 @@ class ContactPage extends Component {
       });
     });
 
-    // Date Validation
-    validatedFlag = this.requiredFieldValidation();
-    validatedFlag = this.phoneOrEmailRequiredValidation();
-    validatedFlag = this.phoneNumberValidation();
-    validatedFlag = this.emailValidation();
-    validatedFlag = this.dateAfterTodayValidation();
+    let f1 = this.requiredFieldValidation();
+    let f2 = this.phoneOrEmailRequiredValidation();
+    let f3 = this.phoneNumberValidation();
+    let f4 = this.emailValidation();
+    let f5 = this.dateAfterTodayValidation();
 
-    if (validatedFlag) {
+    if (f1 && f2 && f3 && f4 && f5) {
       this.setState({ submitted: true });
     }
   };
