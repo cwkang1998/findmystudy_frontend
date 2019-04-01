@@ -88,6 +88,11 @@ class ContactPage extends Component {
     quizTaken: false
   };
 
+  componentDidMount() {
+    // Fix scrolling issue.
+    window.scrollTo(0, 0);
+  }
+
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };

@@ -1,61 +1,190 @@
 import React, { Component } from 'react';
-import Facebook from '../resources/icons/facebook.png';
-import Email from '../resources/icons/email.png';
-import WhatsApp from '../resources/icons/whatsapp.png';
-import Phone from '../resources/icons/phone.png';
-import Address from '../resources/icons/address.png';
-import Skype from '../resources/icons/skype.png';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+import Redirect from 'react-router-dom/Redirect';
+import PersonalityTypes from '../services/PersonalityTypes';
 
+const styles = theme => ({
+  titleText: {
+    fontSize: 36,
+    fontWeight: 600,
+    margin: 16,
+    color: '#e67e00'
+  },
+  subtitleText: {
+    fontSize: 24,
+    margin: 16
+  },
+  content: {
+    padding: 16,
+    width: '100%',
+    textAlign: 'left',
+    [theme.breakpoints.up('md')]: {
+      width: 600
+    }
+  },
+  contentTitle: {
+    fontSize: 24,
+    fontWeight: 400,
+    marginBottom: 8
+  },
+  colorText: {
+    fontWeight: 600
+  },
+  contentList: {
+    marginLeft: 0,
+    marginTop: 8,
+    marginBottom: 32
+  },
+  contentText: {
+    fontSize: 16
+  },
+  buttonContainer: {
+    padding: 8
+  },
+  button: {
+    marginBottom: 16
+  }
+});
 class ResultPage extends Component {
+  constructor(props) {
+    super(props);
+
+    // const passedState = this.props.location.state;
+    const passedState = { color: 'orange' };
+    if (passedState) {
+      this.state = {
+        isFromQuiz: true,
+        color: passedState.color,
+        resultData: PersonalityTypes[passedState.color]
+      };
+    } else {
+      this.state = {
+        isFromQuiz: false,
+        resultData: {},
+        color: ''
+      };
+    }
+  }
+
+  navigateTo = destinationURL => {
+    this.props.history.push(destinationURL);
+  };
+
   render() {
+    const { classes } = this.props;
+    const { isFromQuiz, color, resultData } = this.state;
+    if (!isFromQuiz) {
+      return <Redirect to="/quiz" />;
+    }
     return (
       <div>
-        <h1>Your Results are :</h1>
-        <h1 style={divStyle}>CONTACT US</h1>
-        {/* Facebook icon */}
-        <a href="https://www.facebook.com/ckchiau">
-          <img src={Facebook} alt="fb icon" />
-        </a>
-        CK CHIAU ADVISORY
-        {/* Email icon */}
-        <p>
-          <img src={Email} alt="email icon" />
-        </p>
-        ck@mystudy.my
-        {/* Whatsapp icon */}
-        <p>
-          <img src={WhatsApp} alt="whatsapp icon" />
-        </p>
-        +6017-8897743
-        {/* Phone icon */}
-        <p>
-          <img src={Phone} alt="phone icon" />
-        </p>
-        +603-6259 0021
-        {/* Address icon */}
-        <p>
-          <div>
-            <a href="https://www.google.com/search?rlz=1C1GCEA_enMY805MY805&tbm=lcl&ei=QKVrXJueKMLWwAKnyqIY&q=mystudy&oq=mystudy&gs_l=psy-ab.3...4758.4912.0.5120.2.2.0.0.0.0.0.0..0.0....0...1c.1.64.psy-ab..2.0.0....0.IV3soXW7TJA#rlfi=hd:;si:2025452943986851701;mv:!1m2!1d3.1964837773190293!2d101.6795426577346!2m2!1d3.1961238226809696!2d101.67918214226542">
-              <img src={Address} alt="address icon" />
-            </a>
-          </div>
-          CK CHIAU ADVISORY 3-1-3, Cantonment Exchange, 698, Jalan Sultan Azlan
-          Shah (Jalan Ipoh), 51200 Kuala Lumpur.
-        </p>
-        {/* Skype icon */}
-        <div>
-          <img src={Skype} alt="skype icon" />
-        </div>
-        ckchiau
-        <span>&nbsp;&nbsp;</span>
+        <Grid container direction="column" alignItems="center">
+          {/* Title */}
+          <Grid item xs={12}>
+            <h1>
+              <Typography className={classes.titleText}>Results</Typography>
+            </h1>
+            <h4>
+              <Typography className={classes.subtitleText}>
+                Your personality colour is:{' '}
+                <span className={classes.colorText} style={{ color: color }}>
+                  {color.charAt(0).toUpperCase() + color.slice(1)}
+                </span>
+              </Typography>
+            </h4>
+          </Grid>
+
+          {/* Display based on form submission */}
+          <Grid item xs={12} className={classes.content}>
+            {/* Personalities */}
+            <Typography className={classes.contentTitle}>
+              Personalities
+            </Typography>
+            <Divider />
+            <ul className={classes.contentList}>
+              {resultData['personalities'].map((data, key) => (
+                <li key={key}>
+                  <Typography className={classes.contentText}>
+                    {data}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+
+            {/* Interests */}
+            <Typography className={classes.contentTitle}>Interests</Typography>
+            <Divider />
+            <ul className={classes.contentList}>
+              {resultData['interests'].map((data, key) => (
+                <li key={key}>
+                  <Typography className={classes.contentText}>
+                    {data}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+
+            {/* Preferred Work */}
+            <Typography className={classes.contentTitle}>
+              Preferred Work
+            </Typography>
+            <Divider />
+            <ul className={classes.contentList}>
+              {resultData['preferred_work'].map((data, key) => (
+                <li key={key}>
+                  <Typography className={classes.contentText}>
+                    {data}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+
+            {/* Preferred Career */}
+            <Typography className={classes.contentTitle}>
+              Preferred Career
+            </Typography>
+            <Divider />
+            <ul className={classes.contentList}>
+              {resultData['preferred_careers'].map((data, key) => (
+                <li key={key}>
+                  <Typography className={classes.contentText}>
+                    {data}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+          </Grid>
+
+          <Grid item xs={12} className={classes.buttonContainer}>
+            <Button
+              name="University"
+              variant="contained"
+              color="primary"
+              fullWidth
+              className={classes.button}
+              onClick={() => this.navigateTo('/uni')}
+            >
+              Search for Universities
+            </Button>
+            <Button
+              name="Book"
+              variant="contained"
+              color="secondary"
+              fullWidth
+              className={classes.button}
+              onClick={() => this.navigateTo('/contact')}
+            >
+              Book an appointment to learn more.
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     );
   }
 }
 
-const divStyle = {
-  fontSize: 75,
-  color: 'darkblue'
-};
-
-export default ResultPage;
+export default withStyles(styles)(ResultPage);

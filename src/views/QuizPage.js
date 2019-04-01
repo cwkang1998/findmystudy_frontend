@@ -183,9 +183,7 @@ class QuizQuestions extends Component {
           this.context.storage.saveStudentData(studentData);
           this.props.history.push({
             pathname: '/result',
-            state: {
-              analysedColorData: analysedColorData
-            }
+            state: analysedColorData
           });
         } catch (e) {
           console.log(e);
@@ -202,9 +200,7 @@ class QuizQuestions extends Component {
           this.context.storage.saveStudentData(studentData);
           this.props.history.push({
             pathname: '/result',
-            state: {
-              analysedColorData: analysedColorData
-            }
+            state: analysedColorData
           });
         } catch (e) {
           this.context.storage.saveStudentData(studentData);
@@ -257,6 +253,13 @@ class QuizQuestions extends Component {
       }
     });
     this.setState({ isBasicInfoGiven: valid });
+  };
+
+  formOnEnterKey = event => {
+    let code = event.keyCode || event.which;
+    if (code === 13) {
+      this.validateAndProceed();
+    }
   };
 
   render() {
@@ -357,7 +360,10 @@ class QuizQuestions extends Component {
           ) : (
             // Display forms
             <Grid item xs={12}>
-              <form className={classes.form}>
+              <form
+                className={classes.form}
+                onKeyPress={this.formOnEnterKey.bind(this)}
+              >
                 <TextField
                   id="name"
                   label="Name"
