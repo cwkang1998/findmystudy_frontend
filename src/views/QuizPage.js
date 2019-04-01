@@ -115,6 +115,11 @@ class QuizQuestions extends Component {
     this.setState({ questions: data });
   }
 
+  componentDidUpdate() {
+    // Fix scrolling issue.
+    window.scrollTo(0, 0);
+  }
+
   proceedBack = () => {
     let currentStartIndex = this.state.startIndex;
     if (currentStartIndex > 0) {

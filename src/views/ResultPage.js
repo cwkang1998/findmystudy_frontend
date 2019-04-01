@@ -52,9 +52,7 @@ const styles = theme => ({
 class ResultPage extends Component {
   constructor(props) {
     super(props);
-
-    // const passedState = this.props.location.state;
-    const passedState = { color: 'orange' };
+    const passedState = this.props.location.state;
     if (passedState) {
       this.state = {
         isFromQuiz: true,
@@ -68,6 +66,11 @@ class ResultPage extends Component {
         color: ''
       };
     }
+  }
+
+  componentDidMount() {
+    // Fix scrolling issue.
+    window.scrollTo(0, 0);
   }
 
   navigateTo = destinationURL => {
