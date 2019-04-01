@@ -15,19 +15,20 @@ const styles = {
 
 class UniList extends React.Component {
   render() {
-    const { dataList } = this.props;
+    const { dataList, onItemClick } = this.props;
+    const { api } = this.context;
     return (
       <Grid container spacing={0}>
-        {dataList.map((data, key) => (
-          <Grid item key={data.title} xs={12} md={3}>
+        {dataList.map(data => (
+          <Grid item key={data._id} xs={12} md={3}>
             <div style={styles.cardMargin}>
-              <CardActionArea>
+              <CardActionArea onClick={onItemClick(`/uni/${data._id}`)}>
                 <Card>
-                  <CardHeader title={data.title} />
+                  <CardHeader title={data.name} />
                   <CardMedia
                     component="img"
-                    image={data.img}
-                    title={data.title}
+                    title={data.name}
+                    image={data.icon}
                   />
                 </Card>
               </CardActionArea>

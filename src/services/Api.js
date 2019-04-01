@@ -1,13 +1,15 @@
-const API_URL = 'http://localhost:5000';
-
 export default class ApiService {
+  constructor(){
+    this.API_URL = 'http://localhost:5000';
+  }
+  
   /**
    * Login as an admin
    * @param username
    * @param password
    */
   adminLogin = async (username, password) => {
-    return await fetch(`${API_URL}/admin/login`, {
+    return await fetch(`${this.API_URL}/admin/login`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
       },
@@ -27,10 +29,10 @@ export default class ApiService {
    * @param password
    */
   adminSignup = async (token, username, password) => {
-    return await fetch(`${API_URL}/admin/signup`, {
+    return await fetch(`${this.API_URL}/admin/signup`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
+        Authorization: `Token ${token}`
       },
       method: 'POST',
       body: {
@@ -46,8 +48,8 @@ export default class ApiService {
    * @param token authorization token
    */
   getAllBookings = async token => {
-    return await fetch(`${API_URL}/booking`, {
-      headers: { Authorization: `Bearer ${token}` }
+    return await fetch(`${this.API_URL}/booking`, {
+      headers: { Authorization: `Token ${token}` }
     });
   };
 
@@ -59,7 +61,7 @@ export default class ApiService {
    * Data format: {student, phone_number, email, booking_time}.
    */
   createBooking = async data => {
-    return await fetch(`${API_URL}/booking`, {
+    return await fetch(`${this.API_URL}/booking`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
       },
@@ -73,7 +75,8 @@ export default class ApiService {
    * @param nameQuery string to query for universities
    */
   getAllUnis = async (nameQuery = '') => {
-    return await fetch(`${API_URL}/uni?q=${nameQuery}`);
+    console.log(nameQuery);
+    return await fetch(`${this.API_URL}/uni?q=${nameQuery}`);
   };
 
   /**
@@ -81,7 +84,7 @@ export default class ApiService {
    * @param id university id
    */
   getUni = async id => {
-    return await fetch(`${API_URL}/uni/${id}`);
+    return await fetch(`${this.API_URL}/uni/${id}`);
   };
 
   /**
@@ -90,10 +93,10 @@ export default class ApiService {
    * @param token authorization token
    */
   createUni = async (token, data) => {
-    return await fetch(`${API_URL}/uni`, {
+    return await fetch(`${this.API_URL}/uni`, {
       headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Token ${token}`
       },
       method: 'POST',
       body: JSON.stringify(data)
@@ -108,10 +111,10 @@ export default class ApiService {
    * @param data updating datas
    */
   updateUni = async (token, id, data) => {
-    return await fetch(`${API_URL}/uni/${id}`, {
+    return await fetch(`${this.API_URL}/uni/${id}`, {
       headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Token ${token}`
       },
       method: 'PUT',
       body: JSON.stringify(data)
@@ -125,10 +128,10 @@ export default class ApiService {
    * @param id university id
    */
   deleteUni = async (token, id) => {
-    return await fetch(`${API_URL}/uni/${id}`, {
+    return await fetch(`${this.API_URL}/uni/${id}`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
+        Authorization: `Token ${token}`
       },
       method: 'DELETE'
     });
@@ -140,8 +143,8 @@ export default class ApiService {
    * @param token authorization token
    */
   getAllStudents = async token => {
-    return await fetch(`${API_URL}/student`, {
-      headers: { Authorization: `Bearer ${token}` }
+    return await fetch(`${this.API_URL}/student`, {
+      headers: { Authorization: `Token ${token}` }
     });
   };
 
@@ -152,8 +155,8 @@ export default class ApiService {
    * @param id id of student.
    */
   getStudent = async (token, id) => {
-    return await fetch(`${API_URL}/student/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
+    return await fetch(`${this.API_URL}/student/${id}`, {
+      headers: { Authorization: `Token ${token}` }
     });
   };
 
@@ -162,7 +165,7 @@ export default class ApiService {
    * @param data data for the new student
    */
   createStudent = async data => {
-    return await fetch(`${API_URL}/student`, {
+    return await fetch(`${this.API_URL}/student`, {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
       method: 'POST',
       body: JSON.stringify(data)
@@ -175,7 +178,7 @@ export default class ApiService {
    * @param data new data for the student
    */
   updateStudent = async (id, data) => {
-    return await fetch(`${API_URL}/student/${id}`, {
+    return await fetch(`${this.API_URL}/student/${id}`, {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
       method: 'PUT',
       body: JSON.stringify(data)
@@ -186,7 +189,7 @@ export default class ApiService {
    * Get all quiz questions
    */
   getAllQuiz = async () => {
-    return await fetch(`${API_URL}/survey`);
+    return await fetch(`${this.API_URL}/survey`);
   };
 
   /**
@@ -196,10 +199,10 @@ export default class ApiService {
    * @param data data for the new questions
    */
   createQuiz = async (token, data) => {
-    return await fetch(`${API_URL}/survey`, {
+    return await fetch(`${this.API_URL}/survey`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
+        Authorization: `Token ${token}`
       },
       method: 'POST',
       body: JSON.stringify(data)
@@ -214,10 +217,10 @@ export default class ApiService {
    * @param data updated data for the questions
    */
   updateUni = async (token, id, data) => {
-    return await fetch(`${API_URL}/survey/${id}`, {
+    return await fetch(`${this.API_URL}/survey/${id}`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
+        Authorization: `Token ${token}`
       },
       method: 'PUT',
       body: JSON.stringify(data)
@@ -231,10 +234,10 @@ export default class ApiService {
    * @param id id for the quiz questions
    */
   deleteQuiz = async (token, id) => {
-    return await fetch(`${API_URL}/survey/${id}`, {
+    return await fetch(`${this.API_URL}/survey/${id}`, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
+        Authorization: `Token ${token}`
       },
       method: 'DELETE'
     });

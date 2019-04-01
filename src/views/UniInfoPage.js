@@ -9,6 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import NottIcon from '../resources/icons/Nottingham-Logo.jpg';
 import Button from '@material-ui/core/Button';
+import GlobalContext from '../services/GlobalContext';
 
 const styles = theme => ({
   root: {
@@ -58,81 +59,99 @@ const styles = theme => ({
 });
 
 class UniInfo extends Component {
+  static contextType = GlobalContext;
   state = {
-    uniData: {}
+    uniID: '',
+    uniData: null
   };
-  componentDidMount() {
+
+  async componentDidMount() {
     const {
       match: { params }
     } = this.props;
     this.setState({
-      uniData: {
-        _id: params
-      }
+      uniID: params.id
+    });
+
+    const { api } = this.context;
+    let data = {};
+    try {
+      let res = await api.getUni(params.id);
+      data = await res.json();
+      data.icon = `${api.API_URL}${data.icon}`;
+    } catch (err) {
+      console.log(err);
+    }
+
+    this.setState({
+      uniData: data
     });
   }
 
   render() {
     const { classes, history } = this.props;
+    const { uniData } = this.state;
+    console.log(this.state);
     return (
       // Banner Image
-      <Grid container className={classes.root}>
-        <Grid item xs={12} className={classes.banner}>
-          <img src={NottIcon} alt="uniicon" className={classes.responsiveImg} />
-        </Grid>
-        {/* Main Content */}
-        <Grid item xs={12} md={9} className={classes.main}>
-          <Typography variant="h5" className={classes.contentTitle}>
-            Information
-          </Typography>
-          <Divider />
-          <Typography className={classes.content}>
-            The National University of Singapore (NUS) is the first autonomous
-            research university in Singapore. NUS is a comprehensive research
-            university, offering a wide range of disciplines, including the
-            sciences, medicine and dentistry, design and environment, law, arts
-            and social sciences, engineering, business, computing and music in
-            both undergraduate and postgraduate levels. Founded in 1905 as the
-            King Edward VII College of Medicine, NUS is the oldest higher
-            education institution in Singapore.
-          </Typography>
-        </Grid>
-
-        {/* Course List */}
-        <Grid item xs={12} md={3}>
-          <Paper elevation={0}>
-            <List>
-              <ListItem divider>
-                <Typography variant="h6">Popular Courses</Typography>
-              </ListItem>
-              <ListItem>Chinese Language</ListItem>
-              <ListItem>Chinese Studies</ListItem>
-            </List>
-          </Paper>
-        </Grid>
-
-        {/* Address */}
-        <Grid item xs={12} className={classes.main}>
-          <Typography variant="h6" className={classes.contentTitle}>
-            Address
-          </Typography>
-          <Divider />
-          <Typography className={classes.content}>
-            21 Lower Kent Ridge Rd, Singapore 119077
-          </Typography>
-        </Grid>
-
-        {/* Go to Bookings */}
-        <Grid item xs={12} className={classes.buttonContainer}>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={() => history.push('/contact')}
-          >
-            Make an Enquiry
-          </Button>
-        </Grid>
-      </Grid>
+      <React.Fragment>
+        {uniData ? (
+          <Grid container className={classes.root}>
+            <Grid item xs={12} className={classes.banner}>
+              <img
+                src={uniData.icon}
+                alt="uniicon"
+                className={classes.responsiveImg}
+              />
+            </Grid>
+            {/* Main Content */}
+            <Grid item xs={12} md={9} className={classes.main}>
+              <Typography variant="h5" className={classes.contentTitle}>
+                Information
+              </Typography>
+              <Divider />
+              <Typography className={classes.content}>
+                {uniData.description}
+              </Typography>
+            </Grid>
+            {/* Course List */}
+            <Grid item xs={12} md={3}>
+              <Paper elevation={0}>
+                <List>
+                  <ListItem divider>
+                    <Typography variant="h6">Popular Courses</Typography>
+                  </ListItem>
+                  {uniData.courses.map(e => (
+                    <ListItem>{e}</ListItem>
+                  ))}
+                </List>
+              </Paper>
+            </Grid>
+            {/* Address */}
+            <Grid item xs={12} className={classes.main}>
+              <Typography variant="h6" className={classes.contentTitle}>
+                Address
+              </Typography>
+              <Divider />
+              <Typography className={classes.content}>
+                {uniData.address}
+              </Typography>
+            </Grid>
+            {/* Go to Bookings */}
+            <Grid item xs={12} className={classes.buttonContainer}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => history.push('/contact')}
+              >
+                Make an Enquiry
+              </Button>
+            </Grid>
+          </Grid>
+        ) : (
+          <div />
+        )}
+      </React.Fragment>
     );
   }
 }

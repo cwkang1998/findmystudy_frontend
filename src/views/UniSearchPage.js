@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import FilterSearchBar from '../components/FilterSearchBar';
+import Typography from '@material-ui/core/Typography';
+import SearchBar from '../components/SearchBar';
 import UniList from '../components/UniList';
+import GlobalContext from '../services/GlobalContext';
 
 const styles = {
   container: {
@@ -13,58 +15,78 @@ const styles = {
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 8
+  },
+  nothingText: {
+    fontSize: 16,
+    margin: 16,
+    textAlign: 'center'
   }
 };
 
 export default class SearchPage extends Component {
+  static contextType = GlobalContext;
   state = {
-    dataList: [
-      {
-        title: 'Featured post',
-        uni: 'UniName',
-        img:
-          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
-      },
-      {
-        title: 'Post title',
-        uni: 'UniName2',
-        img:
-          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
-      },
-      {
-        title: 'Post title3',
-        uni: 'UniName2',
-        img:
-          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
-      },
-      {
-        title: 'Post title2',
-        uni: 'UniName2',
-        img:
-          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
-      },
-      {
-        title: 'Post title4',
-        uni: 'UniName2',
-        img:
-          'http://www.onbicdt.ox.ac.uk/sites/www.onbicdt.ox.ac.uk/files/styles/basic_page_case_study_main_image/public/contentimages/2017-07/UoN-UK-C-M.BlueRGB0150.png?itok=nOfSDAKm'
-      }
-    ]
+    searchValue: '',
+    dataList: []
   };
 
-  onFilterChange = event => {};
+  async componentDidMount() {
+    const { api } = this.context;
+    let data = [];
+    try {
+      let res = await api.getAllUnis();
+      data = await res.json();
+    } catch (err) {
+      console.log(err);
+    }
+    data.map(e => {
+      e.icon = `${api.API_URL}${e.icon}`;
+    });
+    this.setState({ dataList: data });
+  }
+
+  onSearch = async () => {
+    const { api } = this.context;
+    let data = [];
+    try {
+      let res = await api.getAllUnis(this.state.searchValue);
+      data = await res.json();
+    } catch (err) {
+      console.log(err);
+    }
+    data.map(e => {
+      e.icon = `${api.API_URL}${e.icon}`;
+    });
+    this.setState({ dataList: data });
+  };
+
+  onChange = event => {
+    this.setState({ searchValue: event.target.value });
+  };
+
+  navigateTo = destinationURL => {
+    const history = this.props.history;
+    return () => history.push(destinationURL);
+  };
 
   render() {
     const { dataList } = this.state;
     return (
       <div style={styles.container}>
         <div style={styles.searchBar}>
-          <FilterSearchBar
-            topic={this.state.topic}
-            onFilterChange={this.onFilterChange}
+          <SearchBar
+            searchValue={this.state.searchValue}
+            onSearch={this.onSearch}
+            onChange={this.onChange}
           />
         </div>
-        <UniList dataList={dataList} />
+        {dataList.length === 0 ? (
+          <Typography style={styles.nothingText}>
+            Your search did not match any university.
+          </Typography>
+        ) : (
+          <UniList dataList={dataList} onItemClick={this.navigateTo} />
+        )}
       </div>
     );
   }
