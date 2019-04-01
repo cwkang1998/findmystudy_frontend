@@ -100,7 +100,9 @@ class QuizQuestions extends Component {
     let data = [];
     try {
       let res = await this.context.api.getAllQuiz();
-      data = await res.json();
+      if (res.ok) {
+        data = await res.json();
+      }
     } catch (e) {
       console.log(e);
     }

@@ -17,6 +17,7 @@ import Address from '../resources/icons/address.png';
 import Skype from '../resources/icons/skype.png';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import GlobalContext from '../services/GlobalContext';
 
 const styles = theme => ({
   titleText: {
@@ -65,7 +66,10 @@ const styles = theme => ({
   }
 });
 class ContactPage extends Component {
+  static contextType = GlobalContext;
+
   state = {
+    id: '',
     name: '',
     dob: '',
     gender: '',
@@ -91,6 +95,23 @@ class ContactPage extends Component {
   componentDidMount() {
     // Fix scrolling issue.
     window.scrollTo(0, 0);
+
+    // Get student data
+    let studentData = this.context.storage.getStudentData();
+    console.log(studentData);
+    if (studentData) {
+      let quizTaken = false;
+      if (studentData['color']) {
+        quizTaken = true;
+      }
+      this.setState({
+        id: studentData['id'],
+        name: studentData['name'],
+        dob: studentData['dob'],
+        gender: studentData['gender'],
+        quizTaken: quizTaken
+      });
+    }
   }
 
   handleChange = name => event => {
@@ -174,7 +195,7 @@ class ContactPage extends Component {
     return true;
   };
 
-  validateAndSubmit = () => {
+  validateAndSubmit = async () => {
     const { name, dob, gender, phone, email, booking } = this.state;
     const all = { name, dob, gender, phone, email, booking };
 
@@ -193,7 +214,75 @@ class ContactPage extends Component {
     let f5 = this.dateAfterTodayValidation();
 
     if (f1 && f2 && f3 && f4 && f5) {
-      this.setState({ submitted: true });
+      const { api, storage } = this.context;
+      let studentData = storage.getStudentData();
+
+      // Get color from saved data.
+      let color = null;
+      if (studentData) {
+        if (studentData['color']) {
+          color = studentData['color'];
+        }
+      }
+
+      let successFlag = false;
+      let id = this.state.id;
+      if (id) {
+        try {
+          let updateStudentRes = await api.updateStudent(id, {
+            name,
+            dob,
+            gender,
+            color
+          });
+          let createBookingRes = await api.createBooking({
+            student: id,
+            phone_number: phone,
+            email,
+            booking_time: booking
+          });
+          if (updateStudentRes.ok && createBookingRes.ok) {
+            successFlag = true;
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      } else {
+        try {
+          let createStudentRes = await api.createStudent({
+            name,
+            dob,
+            gender,
+            color
+          });
+          if (createStudentRes.ok) {
+            let data = await createStudentRes.json();
+            id = data['_id'];
+            let createBookingRes = await api.createBooking({
+              student: id,
+              phone_number: phone,
+              email,
+              booking_time: booking
+            });
+            if (createBookingRes.ok) {
+              successFlag = true;
+            }
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      storage.saveStudentData({
+        id: id,
+        name: name,
+        dob: dob,
+        gender: gender
+      });
+      if (successFlag && color) {
+        storage.removeStudentData();
+      }
+      this.setState({ submitted: successFlag });
     }
   };
 
