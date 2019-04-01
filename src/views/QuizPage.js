@@ -181,7 +181,7 @@ class QuizQuestions extends Component {
         existingStudentData['id']
       ) {
         try {
-          let data = await this.context.api.updateStudent(
+          await this.context.api.updateStudent(
             existingStudentData['id'],
             studentData
           );

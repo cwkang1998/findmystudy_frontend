@@ -16,7 +16,6 @@ const styles = {
 class UniList extends React.Component {
   render() {
     const { dataList, onItemClick } = this.props;
-    const { api } = this.context;
     return (
       <Grid container spacing={0}>
         {dataList.map(data => (

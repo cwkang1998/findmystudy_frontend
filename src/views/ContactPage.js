@@ -170,7 +170,7 @@ class ContactPage extends Component {
   emailValidation = () => {
     if (
       this.state.email &&
-      !this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+      !this.state.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
     ) {
       this.setState({
         email: '',

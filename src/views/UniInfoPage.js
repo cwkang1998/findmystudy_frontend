@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import NottIcon from '../resources/icons/Nottingham-Logo.jpg';
 import Button from '@material-ui/core/Button';
 import GlobalContext from '../services/GlobalContext';
 
@@ -78,7 +77,6 @@ class UniInfo extends Component {
     try {
       let res = await api.getUni(params.id);
       data = await res.json();
-      data.icon = `${api.API_URL}${data.icon}`;
     } catch (err) {
       console.log(err);
     }

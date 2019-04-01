@@ -39,9 +39,6 @@ export default class SearchPage extends Component {
     } catch (err) {
       console.log(err);
     }
-    data.map(e => {
-      e.icon = `${api.API_URL}${e.icon}`;
-    });
     this.setState({ dataList: data });
   }
 
@@ -54,9 +51,6 @@ export default class SearchPage extends Component {
     } catch (err) {
       console.log(err);
     }
-    data.map(e => {
-      e.icon = `${api.API_URL}${e.icon}`;
-    });
     this.setState({ dataList: data });
   };
 
