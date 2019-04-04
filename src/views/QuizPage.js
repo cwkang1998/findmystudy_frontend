@@ -176,26 +176,28 @@ class QuizQuestions extends Component {
       console.log(studentData);
 
       const existingStudentData = this.context.storage.getStudentData();
-      if (
-        existingStudentData['name'] == this.state.name &&
-        existingStudentData['id']
-      ) {
-        try {
-          await this.context.api.updateStudent(
-            existingStudentData['id'],
-            studentData
-          );
-          studentData['id'] = existingStudentData['id'];
-          // console.log(await data.json());
-          this.context.storage.saveStudentData(studentData);
-          this.props.history.push({
-            pathname: '/result',
-            state: analysedColorData
-          });
-        } catch (e) {
-          console.log(e);
-          this.context.storage.saveStudentData(studentData);
-          this.showSnackBar(`Failed to submit data. Please try again. ${e}.`);
+      if (existingStudentData) {
+        if (
+          existingStudentData['name'] == this.state.name &&
+          existingStudentData['id']
+        ) {
+          try {
+            await this.context.api.updateStudent(
+              existingStudentData['id'],
+              studentData
+            );
+            studentData['id'] = existingStudentData['id'];
+            // console.log(await data.json());
+            this.context.storage.saveStudentData(studentData);
+            this.props.history.push({
+              pathname: '/result',
+              state: analysedColorData
+            });
+          } catch (e) {
+            console.log(e);
+            this.context.storage.saveStudentData(studentData);
+            this.showSnackBar(`Failed to submit data. Please try again. ${e}.`);
+          }
         }
       } else {
         try {
