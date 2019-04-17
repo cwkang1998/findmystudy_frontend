@@ -77,6 +77,7 @@ class QuizQuestions extends Component {
   static contextType = GlobalContext;
 
   state = {
+    id: '',
     name: '',
     dob: '',
     gender: '',
@@ -109,17 +110,13 @@ class QuizQuestions extends Component {
     let studentData = this.context.storage.getStudentData();
     if (studentData) {
       this.setState({
+        id: studentData['id'],
         name: studentData['name'],
         dob: studentData['dob'],
         gender: studentData['gender']
       });
     }
     this.setState({ questions: data });
-  }
-
-  componentDidUpdate() {
-    // Fix scrolling issue.
-    window.scrollTo(0, 0);
   }
 
   proceedBack = () => {
@@ -132,6 +129,7 @@ class QuizQuestions extends Component {
         nextBtnTitle: 'Next'
       });
     }
+    window.scrollTo(0, 0);
   };
 
   proceedNext = async () => {
@@ -175,29 +173,19 @@ class QuizQuestions extends Component {
       console.log(analysedColorData);
       console.log(studentData);
 
-      const existingStudentData = this.context.storage.getStudentData();
-      if (existingStudentData) {
-        if (
-          existingStudentData['name'] == this.state.name &&
-          existingStudentData['id']
-        ) {
-          try {
-            await this.context.api.updateStudent(
-              existingStudentData['id'],
-              studentData
-            );
-            studentData['id'] = existingStudentData['id'];
-            // console.log(await data.json());
-            this.context.storage.saveStudentData(studentData);
-            this.props.history.push({
-              pathname: '/result',
-              state: analysedColorData
-            });
-          } catch (e) {
-            console.log(e);
-            this.context.storage.saveStudentData(studentData);
-            this.showSnackBar(`Failed to submit data. Please try again. ${e}.`);
-          }
+      if (this.state.id) {
+        try {
+          await this.context.api.updateStudent(this.state.id, studentData);
+          studentData['id'] = this.state.id;
+          this.context.storage.saveStudentData(studentData);
+          this.props.history.push({
+            pathname: '/result',
+            state: analysedColorData
+          });
+        } catch (e) {
+          console.log(e);
+          this.context.storage.saveStudentData(studentData);
+          this.showSnackBar(`Failed to submit data. Please try again. ${e}.`);
         }
       } else {
         try {
@@ -217,6 +205,7 @@ class QuizQuestions extends Component {
         }
       }
     }
+    window.scrollTo(0, 0);
   };
 
   onRadioClicked = no => {
@@ -252,6 +241,7 @@ class QuizQuestions extends Component {
     const { name, dob, gender } = this.state;
     const required = { name, dob, gender };
 
+    // Required Validations
     Object.keys(required).forEach(key => {
       if (!required[key]) {
         valid = false;
@@ -261,7 +251,15 @@ class QuizQuestions extends Component {
         });
       }
     });
-    this.setState({ isBasicInfoGiven: valid });
+
+    // Same person validation
+    let id = '';
+    let studentData = this.context.storage.getStudentData();
+
+    if (studentData['name'] == name && studentData['dob'] == dob) {
+      id = studentData['id'];
+    }
+    this.setState({ isBasicInfoGiven: valid, id: id });
   };
 
   formOnEnterKey = event => {
