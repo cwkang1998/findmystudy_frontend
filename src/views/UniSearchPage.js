@@ -54,8 +54,9 @@ export default class SearchPage extends Component {
     this.setState({ dataList: data });
   };
 
-  onChange = event => {
-    this.setState({ searchValue: event.target.value });
+  onChange = async event => {
+    await this.setState({ searchValue: event.target.value });
+    this.onSearch();
   };
 
   navigateTo = destinationURL => {

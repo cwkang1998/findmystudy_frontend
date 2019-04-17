@@ -7,9 +7,24 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 
 const styles = {
   cardMargin: {
-    marginRight: 16,
-    marginLeft: 16,
-    marginTop: 16
+    paddingRight: 16,
+    paddingLeft: 16,
+    paddingTop: 16,
+    height: '100%',
+  },
+  cardBtn:{
+    height: '100%'
+  },
+  card:{
+    display:'flex',
+    flexDirection:'column',
+    height: '100%',
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  cardImg:{
+    width:'auto',
+    maxHeight: 120
   }
 };
 
@@ -21,13 +36,14 @@ class UniList extends React.Component {
         {dataList.map(data => (
           <Grid item key={data._id} xs={12} md={3}>
             <div style={styles.cardMargin}>
-              <CardActionArea onClick={onItemClick(`/uni/${data._id}`)}>
-                <Card>
+              <CardActionArea onClick={onItemClick(`/uni/${data._id}`)} style={styles.cardBtn}>
+                <Card style={styles.card}>
                   <CardHeader title={data.name} />
                   <CardMedia
                     component="img"
                     title={data.name}
                     image={data.icon}
+                    style={styles.cardImg}
                   />
                 </Card>
               </CardActionArea>

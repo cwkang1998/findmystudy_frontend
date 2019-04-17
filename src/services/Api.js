@@ -1,6 +1,6 @@
 export default class ApiService {
   constructor(){
-    this.API_URL = 'http://localhost:5000';
+    this.API_URL = 'http://192.168.43.32:5000/api';
   }
   
   /**
