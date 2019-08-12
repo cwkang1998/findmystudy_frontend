@@ -10,17 +10,15 @@ const styles = theme => ({
   }
 });
 
-class AdminHomePage extends Component {
+class AdminDashboard extends Component {
   render() {
     const { classes } = this.props;
-    // <div className={classes.root}>
-    //   </div>
     return (
       <Container className={classes.root}>
-        <h1>Welcome to the admin panel !</h1>
+        <h1>Welcome to the dashboard !</h1>
       </Container>
     );
   }
 }
 
-export default withStyles(styles)(AdminHomePage);
+export default withStyles(styles)(AdminDashboard);

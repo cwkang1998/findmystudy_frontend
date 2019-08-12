@@ -59,7 +59,7 @@ class AdminLoginPage extends Component {
         await this.context.setAdminToken(data['token']);
         this.setState({ redirect: 'admin' });
       } else {
-        console.log('Incorrect username/password');
+        console.log('Incorrect username/password'); //Please display this later on
         await this.context.setAdminToken('');
         this.setState({ redirect: '' });
       }

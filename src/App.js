@@ -16,7 +16,7 @@ import QuizPage from '././views/QuizPage';
 import UniInfoPage from './views/UniInfoPage';
 
 // Admin Page Imports
-import AdminHomePage from './views/AdminHomePage';
+import AdminDashboard from './views/AdminDashboard';
 import AdminLoginPage from './views/AdminLoginPage';
 import AdminStudentPage from './views/AdminStudentPage';
 import AdminUniversityPage from './views/AdminUniversityPage';
@@ -142,7 +142,7 @@ class App extends Component {
           value={{
             api: new Api(),
             storage: new Storage(),
-            admin: this.state.adminToken,
+            adminToken: this.state.adminToken,
             setAdminToken: this.setAdminToken
           }}
         >
@@ -158,7 +158,7 @@ class App extends Component {
                 <Route path="/admin/login" component={AdminLoginPage} />
                 {this.state.adminToken ? (
                   <Switch>
-                    <Route exact path="/admin" component={AdminHomePage} />
+                    <Route exact path="/admin" component={AdminDashboard} />
                     <Route path="/admin/student" component={AdminStudentPage} />
                     <Route path="/admin/uni" component={AdminUniversityPage} />
                     <Route component={NoMatchPage} />

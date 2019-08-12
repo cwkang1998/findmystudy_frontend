@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 const styles = theme => ({
   root: {
     overflowX: 'auto',
-    padding: 8,
+    padding: 8
   },
   hoverPointer: {
     cursor: 'pointer'
@@ -46,9 +46,16 @@ class ClickableTable extends Component {
                   hover={true}
                   className={classes.hoverPointer}
                 >
-                  {Object.keys(row).map(key => (
-                    <TableCell key={row[key]}>{row[key]}</TableCell>
-                  ))}
+                  {Object.keys(row).map(key => {
+                    if (typeof row[key] == 'object') {
+                      return (
+                        <TableCell key={key}>
+                          {JSON.stringify(row[key])}
+                        </TableCell>
+                      );
+                    }
+                    return <TableCell key={key}>{row[key]}</TableCell>;
+                  })}
                 </TableRow>
               ))}
             </TableBody>
