@@ -89,7 +89,6 @@ class UniInfo extends Component {
   render() {
     const { classes, history } = this.props;
     const { uniData } = this.state;
-    console.log(this.state);
     return (
       // Banner Image
       <React.Fragment>

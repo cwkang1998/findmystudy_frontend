@@ -98,7 +98,6 @@ class ContactPage extends Component {
 
     // Get student data
     let studentData = this.context.storage.getStudentData();
-    console.log(studentData);
     if (studentData) {
       let quizTaken = false;
       if (studentData['color']) {

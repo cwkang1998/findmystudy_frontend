@@ -16,7 +16,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Link from 'react-router-dom/Link';
 
 const drawerWidth = 240;
@@ -49,6 +48,10 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1
+  },
+  navLink: {
+    textDecoration: 'none',
+    color: 'inherit'
   }
 });
 
@@ -66,7 +69,7 @@ class AppBarDrawer extends Component {
   };
 
   render() {
-    const { classes, appName, children } = this.props;
+    const { classes, appName, navList, children } = this.props;
     const { open } = this.state;
 
     return (
@@ -109,54 +112,19 @@ class AppBarDrawer extends Component {
           </div>
           <Divider />
           <List>
-            {/* Home */}
-            <Link style={{ textDecoration: 'none' }} to="/">
-              <ListItem button key={'Home'} onClick={this.handleDrawerClose}>
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Home'} />
-              </ListItem>
-            </Link>
-            {/* Quiz */}
-            <Link style={{ textDecoration: 'none' }} to="/quiz">
-              <ListItem
-                button
-                key={'Personality Quiz'}
-                onClick={this.handleDrawerClose}
-              >
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Personality Quiz'} />
-              </ListItem>
-            </Link>
-            {/* Search */}
-            <Link style={{ textDecoration: 'none' }} to="/uni">
-              <ListItem
-                button
-                key={'University'}
-                onClick={this.handleDrawerClose}
-              >
-                <ListItemIcon>
-                  <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary={'University'} />
-              </ListItem>
-            </Link>
-            {/* Contact Us */}
-            <Link style={{ textDecoration: 'none' }} to="/contact">
-              <ListItem
-                button
-                key={'Contact Us'}
-                onClick={this.handleDrawerClose}
-              >
-                <ListItemIcon>
-                  <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Contact Us'} />
-              </ListItem>
-            </Link>
+            {navList.map(item => (
+              <Link className={classes.navLink} to={item.path} key={item.name}>
+                <ListItem
+                  button
+                  onClick={this.handleDrawerClose}
+                >
+                  <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItem>
+              </Link>
+            ))}
           </List>
         </SwipeableDrawer>
 
@@ -171,6 +139,7 @@ class AppBarDrawer extends Component {
 
 AppBarDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
+  navList: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired
 };
 

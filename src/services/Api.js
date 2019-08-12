@@ -1,8 +1,8 @@
 export default class ApiService {
-  constructor(){
-    this.API_URL = 'http://192.168.43.32:5000/api';
+  constructor() {
+    this.API_URL = 'http://localhost:5000/api';
   }
-  
+
   /**
    * Login as an admin
    * @param username
@@ -14,10 +14,10 @@ export default class ApiService {
         'Content-Type': 'application/json; charset=utf-8'
       },
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         username: username,
         password: password
-      }
+      })
     });
   };
 
@@ -35,10 +35,10 @@ export default class ApiService {
         Authorization: `Token ${token}`
       },
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         username: username,
         password: password
-      }
+      })
     });
   };
 
@@ -75,7 +75,6 @@ export default class ApiService {
    * @param nameQuery string to query for universities
    */
   getAllUnis = async (nameQuery = '') => {
-    console.log(nameQuery);
     return await fetch(`${this.API_URL}/uni?q=${nameQuery}`);
   };
 

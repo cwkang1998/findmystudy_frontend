@@ -62,7 +62,7 @@ const styles = theme => ({
     margin: 8
   },
   close: {
-    padding: theme.spacing.unit / 2
+    padding: theme.spacing(0.5)
   },
   form: {
     padding: 16
@@ -119,6 +119,37 @@ class QuizQuestions extends Component {
     this.setState({ questions: data });
   }
 
+  analyseQuiz = (questions, answers) => {
+    let points = { gold: 0, green: 0, blue: 0, orange: 0 };
+    let colorArr = new Array(questions.length).fill(0);
+    // Extract no and color from questions to prevent erronous evaluation
+    for (let i = 0; i < questions.length; i++) {
+      colorArr[questions[i]['no'] - 1] = questions[i]['color'];
+    }
+
+    // Analyse the data and catogorize
+    for (let i = 0; i < colorArr.length; i++) {
+      if (answers[i] === 1) {
+        points[colorArr[i]] = points[colorArr[i]] + 1;
+      }
+    }
+
+    let maxColor = 'gold';
+    let maxVal = 0;
+    let keys = Object.keys(points);
+    for (let i = 0; i < 4; i++) {
+      if (points[keys[i]] > maxVal) {
+        maxVal = points[keys[i]];
+        maxColor = keys[i];
+      }
+    }
+
+    return {
+      color: maxColor,
+      points: points
+    };
+  };
+
   proceedBack = () => {
     let currentStartIndex = this.state.startIndex;
     if (currentStartIndex > 0) {
@@ -159,8 +190,9 @@ class QuizQuestions extends Component {
         this.showSnackBar('The quiz is not completed yet!');
         return;
       }
+      
       // Submit and analyse answer here
-      let analysedColorData = this.context.analyseQuiz(
+      let analysedColorData = this.analyseQuiz(
         this.state.questions,
         this.state.ans
       );
@@ -256,7 +288,11 @@ class QuizQuestions extends Component {
     let id = '';
     let studentData = this.context.storage.getStudentData();
 
-    if (studentData['name'] == name && studentData['dob'] == dob) {
+    if (
+      studentData != null &&
+      studentData['name'] == name &&
+      studentData['dob'] == dob
+    ) {
       id = studentData['id'];
     }
     this.setState({ isBasicInfoGiven: valid, id: id });

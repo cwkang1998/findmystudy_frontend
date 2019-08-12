@@ -3,7 +3,6 @@ import AppBarDrawer from './components/AppBarDrawer';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import './App.css';
 
 const styles = theme => ({
   container: {
@@ -13,7 +12,7 @@ const styles = theme => ({
   },
   textField: {
     marginLeft : 600,
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     width : 500,
   },
   dense: {

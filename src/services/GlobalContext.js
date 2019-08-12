@@ -6,6 +6,5 @@ export default React.createContext({
   api: new Api(),
   storage: new Storage(),
   adminToken: '',
-  setAdminToken: () => {},
-  analyseQuiz: () => {}
+  setAdminToken: () => {}
 });
